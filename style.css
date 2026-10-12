@@ -144,6 +144,10 @@ h2 { font-size: 1.05rem; color: var(--text-soft); margin-top: 24px; }
 }
 .choice-btn small { color: var(--text-soft); font-weight: 500; font-size: .85rem; }
 .choice-btn.selected { border-color: var(--blue); background: var(--blue-light); }
+.choice-btn.correct { border-color: var(--green); background: #e7f8ee; color: var(--green); }
+.choice-btn.wrong { border-color: var(--red); background: #fdeceb; color: var(--red); }
+.choice-btn:disabled { cursor: default; opacity: .75; }
+#choice-answers.choice-group { margin-top: 4px; margin-bottom: 14px; }
 
 .select-input {
   width: 100%;

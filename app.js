@@ -5,6 +5,10 @@
    ======================================================================== */
 const DE_EN_TARGET = 3;
 const EN_DE_TARGET = 2;
+// Bei Deutsch→Englisch: solange der Zähler unter diesem Wert liegt (also bei der
+// 1. und 2. Abfrage), gibt es 4 Antwortmöglichkeiten zur Auswahl statt Eintippen.
+// Die letzte (3.) Abfrage bleibt frei eingetippt, damit echtes Können geprüft wird.
+const MULTIPLE_CHOICE_BELOW_COUNT = 2;
 
 const DB_NAME = "vokabeltrainer-db";
 const DB_VERSION = 1;
@@ -413,6 +417,62 @@ function vocabById(id) {
   return vocabCache.find((v) => v.id === id);
 }
 
+/** Wählt bis zu `count` zufällige, eindeutige englische Wörter aus dem restlichen Wortschatz als Ablenker. */
+function buildDistractors(vocab, count) {
+  const pool = vocabCache.filter((v) => v.id !== vocab.id);
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  const used = new Set([normalize(vocab.en)]);
+  const picked = [];
+  for (const v of pool) {
+    const n = normalize(v.en);
+    if (used.has(n)) continue;
+    used.add(n);
+    picked.push(v.en);
+    if (picked.length >= count) break;
+  }
+  return picked;
+}
+
+function showTextAnswer(placeholder) {
+  const choices = document.getElementById("choice-answers");
+  choices.hidden = true;
+  choices.innerHTML = "";
+
+  const input = document.getElementById("answer-input");
+  input.hidden = false;
+  input.value = "";
+  input.disabled = false;
+  input.placeholder = placeholder;
+  document.getElementById("btn-check-answer").hidden = false;
+  input.focus();
+}
+
+function showChoiceAnswer(vocab) {
+  document.getElementById("answer-input").hidden = true;
+  document.getElementById("btn-check-answer").hidden = true;
+
+  const options = [vocab.en, ...buildDistractors(vocab, 3)];
+  for (let i = options.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [options[i], options[j]] = [options[j], options[i]];
+  }
+
+  const container = document.getElementById("choice-answers");
+  container.innerHTML = "";
+  container.hidden = false;
+  options.forEach((text) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "choice-btn";
+    btn.textContent = text;
+    btn.addEventListener("click", () => handleChoiceClick(btn, text));
+    container.appendChild(btn);
+  });
+}
+
 function renderCurrentCard() {
   if (!session || session.queue.length === 0) {
     finishSession();
@@ -428,11 +488,6 @@ function renderCurrentCard() {
   feedback.hidden = true;
   feedback.className = "feedback-box";
 
-  const input = document.getElementById("answer-input");
-  input.value = "";
-  input.disabled = false;
-
-  document.getElementById("btn-check-answer").hidden = false;
   document.getElementById("btn-next-card").hidden = true;
 
   const speakBtn = document.getElementById("btn-speak-card");
@@ -440,36 +495,31 @@ function renderCurrentCard() {
   if (card.dir === "de-en") {
     document.getElementById("card-direction-label").textContent = "Deutsch → Englisch";
     document.getElementById("card-word").textContent = vocab.de.join(" / ");
-    input.placeholder = "Englisch eingeben…";
     speakBtn.hidden = true;
     currentSpeakText = "";
+
+    if (vocab.count_de_en < MULTIPLE_CHOICE_BELOW_COUNT) {
+      showChoiceAnswer(vocab);
+    } else {
+      showTextAnswer("Englisch eingeben…");
+    }
   } else {
     document.getElementById("card-direction-label").textContent = "Englisch → Deutsch";
     document.getElementById("card-word").textContent = vocab.en;
-    input.placeholder = "Deutsch eingeben…";
     currentSpeakText = vocab.en;
     speakBtn.hidden = false;
     speak(vocab.en);
+    showTextAnswer("Deutsch eingeben…");
   }
-
-  input.focus();
 }
 
 document.getElementById("btn-speak-card").addEventListener("click", () => speak(currentSpeakText));
 
-document.getElementById("answer-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const input = document.getElementById("answer-input");
-  if (input.disabled) return;
-  const raw = input.value;
-  if (!raw.trim()) {
-    input.focus();
-    return;
-  }
-
+/** Wertet eine Antwort (eingetippt oder per Multiple Choice angeklickt) aus, aktualisiert Zähler/Fortschritt. */
+async function processAnswer(rawAnswer) {
   const card = session.queue.shift();
   const vocab = vocabById(card.vocabId);
-  const correct = checkAnswer(card, vocab, raw);
+  const correct = checkAnswer(card, vocab, rawAnswer);
 
   const feedback = document.getElementById("feedback-box");
   feedback.hidden = false;
@@ -509,11 +559,41 @@ document.getElementById("answer-form").addEventListener("submit", async (e) => {
   document.getElementById("learn-progress-text").textContent = `${session.done} von ${session.total} richtig`;
   document.getElementById("learn-progress-fill").style.width = `${Math.round((session.done / session.total) * 100)}%`;
 
-  input.disabled = true;
+  document.getElementById("answer-input").disabled = true;
   document.getElementById("btn-check-answer").hidden = true;
   document.getElementById("btn-next-card").hidden = false;
   document.getElementById("btn-next-card").focus();
+
+  return { correct, vocab };
+}
+
+document.getElementById("answer-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const input = document.getElementById("answer-input");
+  if (input.hidden || input.disabled) return;
+  const raw = input.value;
+  if (!raw.trim()) {
+    input.focus();
+    return;
+  }
+  await processAnswer(raw);
 });
+
+async function handleChoiceClick(clickedBtn, text) {
+  const buttons = Array.from(document.querySelectorAll("#choice-answers .choice-btn"));
+  if (buttons.some((b) => b.disabled)) return;
+  buttons.forEach((b) => (b.disabled = true));
+
+  const { correct, vocab } = await processAnswer(text);
+
+  buttons.forEach((b) => {
+    if (normalize(b.textContent) === normalize(vocab.en)) {
+      b.classList.add("correct");
+    } else if (b === clickedBtn && !correct) {
+      b.classList.add("wrong");
+    }
+  });
+}
 
 document.getElementById("btn-next-card").addEventListener("click", renderCurrentCard);
 
