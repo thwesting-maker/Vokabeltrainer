@@ -100,6 +100,11 @@ function isLearned(v) {
 }
 
 async function seedIfEmpty() {
+  // Nur beim allerersten Start Beispielvokabeln anlegen – danach nie wieder,
+  // auch nicht wenn die Liste später bewusst geleert wird (siehe "Alle Vokabeln löschen").
+  if (localStorage.getItem("vokabeltrainer.seeded") === "true") return;
+  localStorage.setItem("vokabeltrainer.seeded", "true");
+
   const all = await dbGetAll();
   if (all.length > 0) return;
   const seed = [
