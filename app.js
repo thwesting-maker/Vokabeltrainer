@@ -682,6 +682,14 @@ document.getElementById("btn-reset-progress").addEventListener("click", async ()
   toast("Fortschritt zurückgesetzt");
 });
 
+document.getElementById("btn-delete-all").addEventListener("click", async () => {
+  if (!confirm(`Wirklich ALLE ${vocabCache.length} Vokabeln auf diesem Gerät unwiderruflich löschen?`)) return;
+  await dbClear();
+  await reloadVocabCache();
+  document.getElementById("settings-message").textContent = "Alle Vokabeln wurden gelöscht.";
+  toast("Alle Vokabeln gelöscht");
+});
+
 /* ---- Export ---- */
 document.getElementById("btn-export").addEventListener("click", async () => {
   const data = { exportedAt: new Date().toISOString(), vocab: vocabCache };
@@ -731,11 +739,30 @@ function cleanImportList(parsed) {
   return cleaned;
 }
 
+/**
+ * Gleicht importierte Einträge ohne numerische ID gegen vorhandene Vokabeln ab (per Englisch-Wort),
+ * damit ein erneuter Import/Sync bestehende Einträge aktualisiert statt Dubletten anzulegen.
+ * Vorhandener Lernfortschritt (Zähler) bleibt dabei erhalten.
+ */
+function mergeAgainstExisting(cleaned) {
+  const byEn = new Map(vocabCache.map((v) => [normalize(v.en), v]));
+  return cleaned.map((item) => {
+    const existing = item.id != null ? vocabById(item.id) : byEn.get(normalize(item.en));
+    if (existing) {
+      return { id: existing.id, en: item.en, de: item.de, lesson: item.lesson, count_de_en: existing.count_de_en, count_en_de: existing.count_en_de };
+    }
+    return item;
+  });
+}
+
 async function applyImport(cleaned) {
-  if (!confirm(`${cleaned.length} Vokabeln importieren (werden hinzugefügt bzw. aktualisiert)?`)) return false;
-  await dbBulkPut(cleaned);
+  const merged = mergeAgainstExisting(cleaned);
+  const newCount = merged.filter((v) => v.id == null).length;
+  const updateCount = merged.length - newCount;
+  if (!confirm(`${newCount} neue Vokabeln hinzufügen, ${updateCount} vorhandene aktualisieren?`)) return false;
+  await dbBulkPut(merged);
   await reloadVocabCache();
-  document.getElementById("settings-message").textContent = `${cleaned.length} Vokabeln importiert.`;
+  document.getElementById("settings-message").textContent = `${merged.length} Vokabeln importiert.`;
   toast("Import erfolgreich ✓");
   return true;
 }
