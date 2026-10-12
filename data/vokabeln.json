@@ -1,70 +1,2326 @@
 {
   "exportedAt": "2026-10-12T00:00:00.000Z",
   "vocab": [
-    { "en": "bag", "de": ["Koffer", "Reisetasche"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "ready", "de": ["fertig", "bereit"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "himself", "de": ["selbst", "sich (selbst)"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "I'd like to", "de": ["Ich möchte", "Ich würde gern"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to move", "de": ["umziehen", "einziehen"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to unpack", "de": ["auspacken"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "American", "de": ["amerikanisch", "aus Amerika", "Amerikaner/-in"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "farewell", "de": ["Abschied", "Abschieds-"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to promise", "de": ["versprechen"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to hate", "de": ["hassen", "nicht mögen"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "true", "de": ["wahr"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "soccer", "de": ["Fußball"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "page", "de": ["Seite"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to join", "de": ["beitreten", "sich anschließen", "verbinden"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "this morning", "de": ["heute Morgen"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "journey", "de": ["Reise", "Fahrt"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "airport", "de": ["Flughafen"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to cry", "de": ["weinen"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to fix", "de": ["reparieren", "befestigen"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to paint", "de": ["streichen"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to laugh", "de": ["lachen"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "yesterday", "de": ["gestern"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-
-    { "en": "photographer", "de": ["Fotograf/-in"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "by the way", "de": ["übrigens"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "fall", "de": ["Herbst"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "else", "de": ["andere/-r/-s", "sonst noch"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "performance", "de": ["Aufführung", "Vorstellung"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "language", "de": ["Sprache"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "pants", "de": ["Hose"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "French fries", "de": ["Pommes frites"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "anyway", "de": ["trotzdem", "jedenfalls", "sowieso"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "biscuit", "de": ["Keks"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "candy", "de": ["Süßigkeiten"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "cookie", "de": ["Keks"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to decide", "de": ["entscheiden", "sich entscheiden"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "grade", "de": ["Note", "Klasse"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "clever", "de": ["schlau", "klug", "intelligent"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "smart", "de": ["schlau", "klug", "intelligent"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to work", "de": ["funktionieren"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "during", "de": ["während"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-
-    { "en": "event", "de": ["Ereignis", "Veranstaltung"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to chat", "de": ["chatten", "plaudern"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "ago", "de": ["vor"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to organise", "de": ["organisieren"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "normal", "de": ["normal"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "good luck", "de": ["viel Glück", "Glück"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to present", "de": ["präsentieren", "vorstellen"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "charity", "de": ["Wohltätigkeitsorganisation", "wohltätige Zwecke"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "organisation", "de": ["Organisation"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to collect", "de": ["sammeln"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "sick", "de": ["krank", "unwohl"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "poor", "de": ["arm"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "environment", "de": ["Umwelt", "Umgebung"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "international", "de": ["international"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to clap", "de": ["klatschen"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "eye", "de": ["Auge"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to enjoy", "de": ["genießen", "sich freuen an"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "backwards", "de": ["rückwärts"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to carry", "de": ["tragen"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "to tidy up", "de": ["aufräumen", "in Ordnung bringen"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "rubbish", "de": ["Müll", "Gerümpel"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "feeling", "de": ["Gefühl"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 },
-    { "en": "clean", "de": ["sauber"], "lesson": "Unit 1", "count_de_en": 0, "count_en_de": 0 }
+    {
+      "en": "lake",
+      "de": [
+        "See"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "cloudy",
+      "de": [
+        "bedeckt",
+        "bewölkt"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "around",
+      "de": [
+        "um ... herum",
+        "umher"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "fire",
+      "de": [
+        "Feuer"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "stick",
+      "de": [
+        "Stock",
+        "Schläger"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "rock climbing",
+      "de": [
+        "Klettern"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "arts and crafts",
+      "de": [
+        "Kunsthandwerk"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "instead",
+      "de": [
+        "stattdessen"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "photography contest",
+      "de": [
+        "Fotowettbewerb"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "guy",
+      "de": [
+        "Typ",
+        "Kerl"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "pyramid",
+      "de": [
+        "Pyramide"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "mummy",
+      "de": [
+        "Mumie"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to joke",
+      "de": [
+        "scherzen",
+        "Spaß machen"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "ride",
+      "de": [
+        "Fahrt",
+        "Ritt"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "soon",
+      "de": [
+        "bald"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to teach",
+      "de": [
+        "unterrichten",
+        "lehren",
+        "beibringen"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "trick",
+      "de": [
+        "Kunststückchen"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "Guess what?",
+      "de": [
+        "Weißt du was?",
+        "Rate mal, was passiert ist"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to guess",
+      "de": [
+        "raten",
+        "erraten",
+        "vermuten"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to give a high five",
+      "de": [
+        "abklatschen",
+        "einschlagen"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "early",
+      "de": [
+        "früh"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to practise",
+      "de": [
+        "üben",
+        "trainieren"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "coach",
+      "de": [
+        "Trainer",
+        "Trainerin"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "local",
+      "de": [
+        "örtlich",
+        "lokal"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "news",
+      "de": [
+        "Nachrichten",
+        "Neuigkeiten"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "message",
+      "de": [
+        "Botschaft",
+        "Nachricht"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "postcard",
+      "de": [
+        "Postkarte"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "fun park",
+      "de": [
+        "Freizeitpark"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "campsite",
+      "de": [
+        "Zeltplatz",
+        "Campingplatz"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "mountain",
+      "de": [
+        "Berg"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "forest",
+      "de": [
+        "Wald"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "tent",
+      "de": [
+        "Zelt"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "north",
+      "de": [
+        "Norden"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "south",
+      "de": [
+        "Süden"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "were",
+      "de": [
+        "warst",
+        "wart",
+        "waren"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "was",
+      "de": [
+        "war"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "at first",
+      "de": [
+        "zuerst",
+        "zunächst"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "only",
+      "de": [
+        "einzig",
+        "einzige"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "adult",
+      "de": [
+        "Erwachsene",
+        "Erwachsener"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "rollercoaster",
+      "de": [
+        "Achterbahn"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "at all",
+      "de": [
+        "überhaupt"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "even",
+      "de": [
+        "sogar",
+        "selbst"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "better",
+      "de": [
+        "besser",
+        "lieber"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "than",
+      "de": [
+        "als"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "age",
+      "de": [
+        "Alter"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "excited",
+      "de": [
+        "aufgeregt",
+        "begeistert"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "in a city",
+      "de": [
+        "in einer Stadt"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "in a town",
+      "de": [
+        "in einer Stadt"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "at home",
+      "de": [
+        "zu Hause"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "at somebody's house",
+      "de": [
+        "im Haus von"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "in the country",
+      "de": [
+        "auf dem Land"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "in the mountains",
+      "de": [
+        "in den Bergen"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "in the forest",
+      "de": [
+        "im Wald"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "at the beach",
+      "de": [
+        "am Strand"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "by the sea",
+      "de": [
+        "am Meer"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "on the coast",
+      "de": [
+        "an der Küste"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "in the sea",
+      "de": [
+        "im Meer"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "in the river",
+      "de": [
+        "im Fluss"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "in the lake",
+      "de": [
+        "im See"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "at a museum",
+      "de": [
+        "in einem Museum"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "at a castle",
+      "de": [
+        "in einem Schloss"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "at an arts and crafts market",
+      "de": [
+        "auf einem Kunsthandwerkermarkt"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "at a hotel",
+      "de": [
+        "im Hotel"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "in a swimming pool",
+      "de": [
+        "in einem Schwimmbad"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "at a zoo",
+      "de": [
+        "im Zoo"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "on a city tour",
+      "de": [
+        "auf einer Stadtrundfahrt"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "with family",
+      "de": [
+        "bei der Familie"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "with friends",
+      "de": [
+        "bei Freunden"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "with my grandparents",
+      "de": [
+        "bei meinen Großeltern"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "at a fun park",
+      "de": [
+        "in einem Vergnügungspark"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "on the rollercoaster",
+      "de": [
+        "in der Achterbahn"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "cycling",
+      "de": [
+        "Radfahren"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "hiking",
+      "de": [
+        "Wandern"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "on a mountain",
+      "de": [
+        "auf einem Berg"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "at a campsite",
+      "de": [
+        "auf einem Campingplatz"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "in a tent",
+      "de": [
+        "in einem Zelt"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "swimming",
+      "de": [
+        "Schwimmen"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "horse riding",
+      "de": [
+        "Reiten"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "surfing",
+      "de": [
+        "Surfen"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "windsurfing",
+      "de": [
+        "Windsurfen"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "fishing",
+      "de": [
+        "Angeln"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "on a boat ride",
+      "de": [
+        "auf einer Bootstour"
+      ],
+      "lesson": "Welcome back!",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "deaf",
+      "de": [
+        "gehörlos",
+        "schwerhörig",
+        "taub"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "support centre",
+      "de": [
+        "Hilfszentrum",
+        "Betreuungszentrum",
+        "Förderzentrum"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "dance",
+      "de": [
+        "Tanz",
+        "Tanzveranstaltung"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "class",
+      "de": [
+        "Unterricht",
+        "Unterrichtsstunde",
+        "Kurs"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "against",
+      "de": [
+        "gegen"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to belong to",
+      "de": [
+        "gehören zu",
+        "gehören"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "disability",
+      "de": [
+        "Behinderung"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "support",
+      "de": [
+        "Unterstützung",
+        "Hilfe"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "subject",
+      "de": [
+        "Schulfach"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "drama",
+      "de": [
+        "Theater",
+        "Drama"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "design technology",
+      "de": [
+        "Produktdesign"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to design",
+      "de": [
+        "entwerfen",
+        "gestalten"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "product",
+      "de": [
+        "Produkt",
+        "Erzeugnis"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "science",
+      "de": [
+        "Wissenschaft",
+        "Naturwissenschaft"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "biology",
+      "de": [
+        "Biologie"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "chemistry",
+      "de": [
+        "Chemie"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "physics",
+      "de": [
+        "Physik"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "humanities",
+      "de": [
+        "Sozialwissenschaften"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "geography",
+      "de": [
+        "Geografie",
+        "Erdkunde"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "coding",
+      "de": [
+        "Programmierung"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "choir",
+      "de": [
+        "Chor"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to welcome",
+      "de": [
+        "willkommen heißen"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "fair",
+      "de": [
+        "Messe",
+        "Jahrmarkt"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to raise money",
+      "de": [
+        "Geld sammeln"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "buddy",
+      "de": [
+        "Kumpel"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "registration",
+      "de": [
+        "Anwesenheitskontrolle"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "maths",
+      "de": [
+        "Mathematik",
+        "Mathe"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "RE",
+      "de": [
+        "Religion"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "French",
+      "de": [
+        "französisch"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "PE",
+      "de": [
+        "Sportunterricht",
+        "Sport"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "exchange",
+      "de": [
+        "Austausch"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "slide",
+      "de": [
+        "Folie"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to be like",
+      "de": [
+        "sein"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "comment",
+      "de": [
+        "Kommentar"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "slide show",
+      "de": [
+        "Folienpräsentation"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "playground",
+      "de": [
+        "Schulhof",
+        "Pausenhof",
+        "Spielplatz"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "art",
+      "de": [
+        "Kunst"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "music",
+      "de": [
+        "Musik"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "computer science",
+      "de": [
+        "Informatik"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "cooking",
+      "de": [
+        "Kochen"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "photography",
+      "de": [
+        "Fotografie"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to smile",
+      "de": [
+        "lächeln"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "preparation",
+      "de": [
+        "Vorbereitung"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to whisper",
+      "de": [
+        "flüstern"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to discuss",
+      "de": [
+        "diskutieren"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "stuff",
+      "de": [
+        "Zeug"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "photo booth",
+      "de": [
+        "Fotobox"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "It's up to you.",
+      "de": [
+        "Wie du willst.",
+        "Das musst du wissen."
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to miss",
+      "de": [
+        "verpassen",
+        "versäumen"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to stammer",
+      "de": [
+        "stammeln"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to realise",
+      "de": [
+        "erkennen",
+        "realisieren"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to come up with",
+      "de": [
+        "sich etw. einfallen lassen",
+        "sich etw. ausdenken"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "thought",
+      "de": [
+        "Gedanke"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to rush",
+      "de": [
+        "eilen",
+        "sich beeilen"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "through",
+      "de": [
+        "durch"
+      ],
+      "lesson": "Unit 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "accent",
+      "de": [
+        "Akzent"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to arrive",
+      "de": [
+        "ankommen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "trip",
+      "de": [
+        "Trip",
+        "Reise",
+        "Ausflug",
+        "Fahrt"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to fly",
+      "de": [
+        "fliegen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "bag",
+      "de": [
+        "Koffer",
+        "Reisetasche"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "ready",
+      "de": [
+        "fertig",
+        "bereit"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "himself",
+      "de": [
+        "selbst",
+        "sich (selbst)"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "I'd like to",
+      "de": [
+        "Ich möchte",
+        "Ich würde gern"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to move",
+      "de": [
+        "umziehen",
+        "einziehen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to unpack",
+      "de": [
+        "auspacken"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "American",
+      "de": [
+        "amerikanisch",
+        "aus Amerika",
+        "Amerikaner"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "farewell",
+      "de": [
+        "Abschied"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to promise",
+      "de": [
+        "versprechen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to hate",
+      "de": [
+        "hassen",
+        "nicht mögen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "true",
+      "de": [
+        "wahr"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "soccer",
+      "de": [
+        "Fußball"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "page",
+      "de": [
+        "Seite"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to join",
+      "de": [
+        "beitreten",
+        "sich anschließen",
+        "verbinden"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "this morning",
+      "de": [
+        "heute Morgen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "journey",
+      "de": [
+        "Reise",
+        "Fahrt"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "airport",
+      "de": [
+        "Flughafen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to cry",
+      "de": [
+        "weinen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to fix",
+      "de": [
+        "reparieren",
+        "befestigen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to paint",
+      "de": [
+        "streichen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to laugh",
+      "de": [
+        "lachen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "yesterday",
+      "de": [
+        "gestern"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "event",
+      "de": [
+        "Ereignis",
+        "Veranstaltung"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to chat",
+      "de": [
+        "chatten",
+        "plaudern"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "ago",
+      "de": [
+        "vor"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to organise",
+      "de": [
+        "organisieren"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "normal",
+      "de": [
+        "normal"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "good luck",
+      "de": [
+        "viel Glück",
+        "Glück"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to present",
+      "de": [
+        "präsentieren",
+        "vorstellen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "charity",
+      "de": [
+        "Wohltätigkeitsorganisation",
+        "wohltätige Zwecke"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "organisation",
+      "de": [
+        "Organisation"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to collect",
+      "de": [
+        "sammeln"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "sick",
+      "de": [
+        "krank",
+        "unwohl"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "poor",
+      "de": [
+        "arm"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "environment",
+      "de": [
+        "Umwelt",
+        "Umgebung"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "international",
+      "de": [
+        "international"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to clap",
+      "de": [
+        "klatschen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "eye",
+      "de": [
+        "Auge"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to enjoy",
+      "de": [
+        "genießen",
+        "sich freuen an"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "backwards",
+      "de": [
+        "rückwärts"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to carry",
+      "de": [
+        "tragen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to tidy up",
+      "de": [
+        "aufräumen",
+        "in Ordnung bringen"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "rubbish",
+      "de": [
+        "Müll",
+        "Gerümpel"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "feeling",
+      "de": [
+        "Gefühl"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "clean",
+      "de": [
+        "sauber"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "sale",
+      "de": [
+        "Verkauf",
+        "Schlussverkauf"
+      ],
+      "lesson": "Unit 1 Station 1",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "skill",
+      "de": [
+        "Fertigkeit",
+        "Geschick"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "equipment",
+      "de": [
+        "Ausstattung",
+        "Ausrüstung"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "for example",
+      "de": [
+        "zum Beispiel"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "robot",
+      "de": [
+        "Roboter",
+        "Automat"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to be interested in",
+      "de": [
+        "interessiert sein an",
+        "sich interessieren für"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "creative writing",
+      "de": [
+        "kreatives Schreiben"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "author",
+      "de": [
+        "Autor",
+        "Autorin"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "Eco",
+      "de": [
+        "Öko"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "dying",
+      "de": [
+        "sterbend"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "fashion",
+      "de": [
+        "Mode"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "industry",
+      "de": [
+        "Industrie",
+        "Branche",
+        "Gewerbe"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "company",
+      "de": [
+        "Firma",
+        "Unternehmen",
+        "Gesellschaft"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "distance",
+      "de": [
+        "Distanz",
+        "Entfernung"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "flight",
+      "de": [
+        "Flug"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to create",
+      "de": [
+        "erschaffen",
+        "erfinden"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "waste",
+      "de": [
+        "Abfall"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "reusable",
+      "de": [
+        "wiederverwendbar"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "energy",
+      "de": [
+        "Energie",
+        "Kraft"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to waste",
+      "de": [
+        "verschwenden"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "shipping",
+      "de": [
+        "Versand",
+        "Transport"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to transport",
+      "de": [
+        "transportieren"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "halfway around the world",
+      "de": [
+        "um die halbe Welt"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "naked",
+      "de": [
+        "nackt"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "still",
+      "de": [
+        "Standbild"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "audience",
+      "de": [
+        "Publikum"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "climate",
+      "de": [
+        "Klima"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "close-up",
+      "de": [
+        "Nahaufnahme"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "close",
+      "de": [
+        "nahe"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "shot",
+      "de": [
+        "Einstellung"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "body language",
+      "de": [
+        "Körpersprache"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "confident",
+      "de": [
+        "selbstsicher",
+        "selbstbewusst"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "awkward",
+      "de": [
+        "peinlich",
+        "ungünstig",
+        "ungeschickt",
+        "unbeholfen"
+      ],
+      "lesson": "Unit 1 Station 2",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "photographer",
+      "de": [
+        "Fotograf"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "by the way",
+      "de": [
+        "übrigens"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "fall",
+      "de": [
+        "Herbst"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "else",
+      "de": [
+        "andere",
+        "sonst noch"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "performance",
+      "de": [
+        "Aufführung",
+        "Vorstellung"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "language",
+      "de": [
+        "Sprache"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "pants",
+      "de": [
+        "Hose"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "French fries",
+      "de": [
+        "Pommes frites"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "anyway",
+      "de": [
+        "trotzdem",
+        "jedenfalls",
+        "sowieso"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "biscuit",
+      "de": [
+        "Keks"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "candy",
+      "de": [
+        "Süßigkeiten"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "cookie",
+      "de": [
+        "Keks"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to decide",
+      "de": [
+        "entscheiden",
+        "sich entscheiden"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "grade",
+      "de": [
+        "Note",
+        "Klasse"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "clever",
+      "de": [
+        "schlau",
+        "klug",
+        "intelligent"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "smart",
+      "de": [
+        "schlau",
+        "klug",
+        "intelligent"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to work",
+      "de": [
+        "funktionieren"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "during",
+      "de": [
+        "während"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "confused",
+      "de": [
+        "verwirrt",
+        "wirr",
+        "konfus"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to show sb around",
+      "de": [
+        "jemanden herumführen",
+        "herumführen"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "future",
+      "de": [
+        "zukünftig"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to look up",
+      "de": [
+        "nachschlagen",
+        "nachschauen"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "color",
+      "de": [
+        "Farbe"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "to enter",
+      "de": [
+        "eingeben"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "search engine",
+      "de": [
+        "Suchmaschine"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "neighbor",
+      "de": [
+        "Nachbar"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    },
+    {
+      "en": "without",
+      "de": [
+        "ohne"
+      ],
+      "lesson": "Unit 1 Station 3",
+      "count_de_en": 0,
+      "count_en_de": 0
+    }
   ]
 }
