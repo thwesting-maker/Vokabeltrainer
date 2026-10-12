@@ -181,10 +181,16 @@
       <select id="voice-select" class="select-input"></select>
     </div>
 
-    <h2>Daten</h2>
+    <h2>Zentrale Vokabelliste</h2>
+    <div class="button-stack">
+      <button class="btn btn-primary btn-large" id="btn-load-server">☁️ Vokabeln vom Server laden</button>
+    </div>
+    <p class="hint-text">Lädt die gemeinsame Vokabelliste direkt – wird hinzugefügt bzw. aktualisiert, nichts wird gelöscht.</p>
+
+    <h2>Backup</h2>
     <div class="button-stack">
       <button class="btn btn-secondary btn-large" id="btn-export">⬇️ Vokabeln exportieren</button>
-      <button class="btn btn-secondary btn-large" id="btn-import">⬆️ Vokabeln importieren</button>
+      <button class="btn btn-secondary btn-large" id="btn-import">⬆️ Vokabeln aus Datei importieren</button>
       <input type="file" id="import-file-input" accept="application/json" hidden>
     </div>
 

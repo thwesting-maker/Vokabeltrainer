@@ -711,7 +711,36 @@ document.getElementById("btn-export").addEventListener("click", async () => {
   document.getElementById("settings-message").textContent = "Export heruntergeladen.";
 });
 
-/* ---- Import ---- */
+/* ---- Gemeinsame Import-Logik (Datei & Server) ---- */
+function cleanImportList(parsed) {
+  const list = Array.isArray(parsed) ? parsed : parsed.vocab;
+  if (!Array.isArray(list)) throw new Error("Ungültiges Format");
+
+  const cleaned = list
+    .filter((v) => v && typeof v.en === "string" && Array.isArray(v.de))
+    .map((v) => ({
+      ...(typeof v.id === "number" ? { id: v.id } : {}),
+      en: v.en,
+      de: v.de,
+      lesson: v.lesson || "",
+      count_de_en: Number.isInteger(v.count_de_en) ? v.count_de_en : 0,
+      count_en_de: Number.isInteger(v.count_en_de) ? v.count_en_de : 0,
+    }));
+
+  if (cleaned.length === 0) throw new Error("Keine Vokabeln gefunden");
+  return cleaned;
+}
+
+async function applyImport(cleaned) {
+  if (!confirm(`${cleaned.length} Vokabeln importieren (werden hinzugefügt bzw. aktualisiert)?`)) return false;
+  await dbBulkPut(cleaned);
+  await reloadVocabCache();
+  document.getElementById("settings-message").textContent = `${cleaned.length} Vokabeln importiert.`;
+  toast("Import erfolgreich ✓");
+  return true;
+}
+
+/* ---- Import aus Datei ---- */
 document.getElementById("btn-import").addEventListener("click", () => {
   document.getElementById("import-file-input").click();
 });
@@ -723,32 +752,28 @@ document.getElementById("import-file-input").addEventListener("change", async (e
 
   try {
     const text = await file.text();
-    const parsed = JSON.parse(text);
-    const list = Array.isArray(parsed) ? parsed : parsed.vocab;
-    if (!Array.isArray(list)) throw new Error("Ungültiges Format");
-
-    const cleaned = list
-      .filter((v) => v && typeof v.en === "string" && Array.isArray(v.de))
-      .map((v) => ({
-        ...(typeof v.id === "number" ? { id: v.id } : {}),
-        en: v.en,
-        de: v.de,
-        lesson: v.lesson || "",
-        count_de_en: Number.isInteger(v.count_de_en) ? v.count_de_en : 0,
-        count_en_de: Number.isInteger(v.count_en_de) ? v.count_en_de : 0,
-      }));
-
-    if (cleaned.length === 0) throw new Error("Keine Vokabeln in der Datei gefunden");
-
-    if (!confirm(`${cleaned.length} Vokabeln importieren (werden hinzugefügt bzw. aktualisiert)?`)) return;
-
-    await dbBulkPut(cleaned);
-    await reloadVocabCache();
-    document.getElementById("settings-message").textContent = `${cleaned.length} Vokabeln importiert.`;
-    toast("Import erfolgreich ✓");
+    const cleaned = cleanImportList(JSON.parse(text));
+    await applyImport(cleaned);
   } catch (err) {
     document.getElementById("settings-message").textContent = "Import fehlgeschlagen: Datei ungültig.";
     toast("Import fehlgeschlagen");
+  }
+});
+
+/* ---- Zentrale Vokabelliste vom Server laden ---- */
+document.getElementById("btn-load-server").addEventListener("click", async () => {
+  const msg = document.getElementById("settings-message");
+  msg.textContent = "Lade Vokabelliste vom Server…";
+  try {
+    // Zeitstempel als Cache-Buster, damit der Service Worker nicht eine veraltete Fassung ausliefert.
+    const res = await fetch("data/vokabeln.json?t=" + Date.now(), { cache: "no-store" });
+    if (!res.ok) throw new Error("Server antwortet mit Fehler " + res.status);
+    const cleaned = cleanImportList(await res.json());
+    const applied = await applyImport(cleaned);
+    if (!applied) msg.textContent = "";
+  } catch (err) {
+    msg.textContent = "Laden fehlgeschlagen. Internetverbindung prüfen.";
+    toast("Laden vom Server fehlgeschlagen");
   }
 });
 
