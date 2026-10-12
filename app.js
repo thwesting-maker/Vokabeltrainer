@@ -740,9 +740,8 @@ document.getElementById("import-file-input").addEventListener("change", async (e
 
     if (cleaned.length === 0) throw new Error("Keine Vokabeln in der Datei gefunden");
 
-    if (!confirm(`${cleaned.length} Vokabeln importieren und aktuelle Liste ersetzen?`)) return;
+    if (!confirm(`${cleaned.length} Vokabeln importieren (werden hinzugefügt bzw. aktualisiert)?`)) return;
 
-    await dbClear();
     await dbBulkPut(cleaned);
     await reloadVocabCache();
     document.getElementById("settings-message").textContent = `${cleaned.length} Vokabeln importiert.`;
