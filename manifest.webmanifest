@@ -1,0 +1,26 @@
+{
+  "name": "Vokabeltrainer",
+  "short_name": "Vokabeln",
+  "description": "Englisch-Vokabeln lernen mit Karteikarten",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f6f8fc",
+  "theme_color": "#4a7cf5",
+  "lang": "de",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
