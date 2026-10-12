@@ -1032,6 +1032,15 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("service-worker.js").catch(() => {});
   });
+
+  // Sobald eine neue Service-Worker-Version übernimmt, Seite automatisch neu laden,
+  // damit Updates auch in einer bereits offenen App ankommen.
+  let swRefreshing = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (swRefreshing) return;
+    swRefreshing = true;
+    location.reload();
+  });
 }
 
 /* ========================================================================

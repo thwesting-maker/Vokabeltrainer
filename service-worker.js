@@ -1,4 +1,4 @@
-const CACHE_NAME = "vokabeltrainer-v1";
+const CACHE_NAME = "vokabeltrainer-v2";
 const PRECACHE_URLS = [
   "./",
   "index.html",
@@ -25,22 +25,21 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+// Network-first: solange online, gibt es immer die aktuellste Version.
+// Nur offline greift der Cache als Fallback (z.B. im Flugzeug/U-Bahn).
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
   if (new URL(event.request.url).origin !== location.origin) return;
 
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      const network = fetch(event.request)
-        .then((response) => {
-          if (response && response.ok) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-          }
-          return response;
-        })
-        .catch(() => cached);
-      return cached || network;
-    })
+    fetch(event.request)
+      .then((response) => {
+        if (response && response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        }
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
