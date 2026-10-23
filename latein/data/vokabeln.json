@@ -1,0 +1,15 @@
+{
+  "exportedAt": "2026-10-23T00:00:00.000Z",
+  "vocab": [
+    { "la": "amare", "de": ["lieben"], "lesson": "Beispiele", "count": 0 },
+    { "la": "videre", "de": ["sehen"], "lesson": "Beispiele", "count": 0 },
+    { "la": "puella", "de": ["Mädchen"], "lesson": "Beispiele", "count": 0 },
+    { "la": "puer", "de": ["Junge"], "lesson": "Beispiele", "count": 0 },
+    { "la": "aqua", "de": ["Wasser"], "lesson": "Beispiele", "count": 0 },
+    { "la": "terra", "de": ["Erde", "Land"], "lesson": "Beispiele", "count": 0 },
+    { "la": "magnus", "de": ["groß"], "lesson": "Beispiele", "count": 0 },
+    { "la": "bonus", "de": ["gut"], "lesson": "Beispiele", "count": 0 },
+    { "la": "dicere", "de": ["sagen"], "lesson": "Beispiele", "count": 0 },
+    { "la": "venire", "de": ["kommen"], "lesson": "Beispiele", "count": 0 }
+  ]
+}

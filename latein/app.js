@@ -1,0 +1,962 @@
+"use strict";
+
+/* ========================================================================
+   Konstanten
+   ======================================================================== */
+const TARGET = 3;
+// 1. und 2. Abfrage: Multiple Choice. Ab Zähler 2 (= 3. Abfrage): frei eintippen.
+const MULTIPLE_CHOICE_BELOW_COUNT = 2;
+
+const DB_NAME = "lateintrainer-db";
+const DB_VERSION = 1;
+const STORE = "vocab";
+
+/* ========================================================================
+   IndexedDB
+   ======================================================================== */
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(STORE)) {
+        db.createObjectStore(STORE, { keyPath: "id", autoIncrement: true });
+      }
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+const dbPromise = openDB();
+
+async function dbGetAll() {
+  const db = await dbPromise;
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, "readonly");
+    const req = tx.objectStore(STORE).getAll();
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function dbPut(obj) {
+  const db = await dbPromise;
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, "readwrite");
+    const req = tx.objectStore(STORE).put(obj);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function dbDelete(id) {
+  const db = await dbPromise;
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, "readwrite");
+    tx.objectStore(STORE).delete(id);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function dbClear() {
+  const db = await dbPromise;
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, "readwrite");
+    tx.objectStore(STORE).clear();
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function dbBulkPut(items) {
+  const db = await dbPromise;
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, "readwrite");
+    const store = tx.objectStore(STORE);
+    items.forEach((it) => store.put(it));
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+/* ========================================================================
+   In-Memory-Cache der Vokabeln
+   ======================================================================== */
+let vocabCache = [];
+
+async function reloadVocabCache() {
+  vocabCache = await dbGetAll();
+  vocabCache.sort((a, b) => {
+    const la = (a.lesson || "").localeCompare(b.lesson || "", "de");
+    if (la !== 0) return la;
+    return a.la.localeCompare(b.la, "de");
+  });
+  return vocabCache;
+}
+
+function isLearned(v) {
+  return v.count >= TARGET;
+}
+
+async function seedIfEmpty() {
+  // Nur beim allerersten Start Beispielvokabeln anlegen - danach nie wieder,
+  // auch nicht wenn die Liste spaeter bewusst geleert wird.
+  if (localStorage.getItem("lateintrainer.seeded") === "true") return;
+  localStorage.setItem("lateintrainer.seeded", "true");
+
+  const all = await dbGetAll();
+  if (all.length > 0) return;
+  const seed = [
+    ["amare", "lieben"],
+    ["videre", "sehen"],
+    ["puella", "Mädchen"],
+    ["puer", "Junge"],
+    ["aqua", "Wasser"],
+    ["terra", "Erde, Land"],
+    ["magnus", "groß"],
+    ["bonus", "gut"],
+    ["dicere", "sagen"],
+    ["venire", "kommen"],
+  ].map(([la, de]) => ({
+    la,
+    de: de.split(",").map((s) => s.trim()).filter(Boolean),
+    lesson: "Beispiele",
+    count: 0,
+  }));
+  await dbBulkPut(seed);
+}
+
+/* ========================================================================
+   Hilfsfunktionen
+   ======================================================================== */
+function normalize(s) {
+  return (s || "").trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function isAnyGermanWordMatch(raw, deList) {
+  const norm = normalize(raw);
+  if (!norm) return false;
+  const tokens = new Set();
+  deList.forEach((d) => {
+    const dn = normalize(d);
+    tokens.add(dn);
+    dn.split(/[\s/,]+/).forEach((w) => {
+      if (w) tokens.add(w);
+    });
+  });
+  return tokens.has(norm);
+}
+
+function getLessons() {
+  const set = new Set();
+  vocabCache.forEach((v) => {
+    if (v.lesson) set.add(v.lesson);
+  });
+  return Array.from(set).sort((a, b) => a.localeCompare(b, "de"));
+}
+
+function toast(msg, ms = 2200) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.hidden = false;
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => {
+    el.hidden = true;
+  }, ms);
+}
+
+/* ========================================================================
+   Navigation
+   ======================================================================== */
+const TITLES = {
+  home: "Lateintrainer",
+  "learn-setup": "Lernen",
+  learn: "Lernen",
+  "learn-done": "Fertig!",
+  list: "Alle Vokabeln",
+  edit: "Vokabel",
+  settings: "Einstellungen",
+  scan: "Vokabeln scannen",
+};
+
+let currentViewId = "home";
+const viewStack = [];
+
+const renderers = {
+  home: renderHome,
+  "learn-setup": renderLearnSetup,
+  list: renderList,
+  settings: renderSettings,
+};
+
+function switchTo(viewId) {
+  document.querySelectorAll(".view").forEach((el) => el.classList.remove("active"));
+  document.getElementById("view-" + viewId).classList.add("active");
+  currentViewId = viewId;
+  document.getElementById("page-title").textContent = TITLES[viewId] || "";
+  document.getElementById("btn-back").hidden = viewStack.length === 0;
+  if (renderers[viewId]) renderers[viewId]();
+}
+
+function navigate(viewId) {
+  if (viewId !== currentViewId) viewStack.push(currentViewId);
+  switchTo(viewId);
+}
+
+function goBack() {
+  const prev = viewStack.pop() || "home";
+  switchTo(prev);
+}
+
+document.getElementById("btn-back").addEventListener("click", goBack);
+document.getElementById("btn-settings").addEventListener("click", () => navigate("settings"));
+
+/* ========================================================================
+   Home
+   ======================================================================== */
+function renderHome() {
+  const total = vocabCache.length;
+  const learned = vocabCache.filter(isLearned).length;
+  document.getElementById("stat-learned").textContent = learned;
+  document.getElementById("stat-total").textContent = total;
+  const pct = total === 0 ? 0 : Math.round((learned / total) * 100);
+  document.getElementById("home-progress-fill").style.width = pct + "%";
+}
+
+document.getElementById("btn-start-learn").addEventListener("click", () => navigate("learn-setup"));
+document.getElementById("btn-vocab-list").addEventListener("click", () => navigate("list"));
+document.getElementById("btn-add-vocab").addEventListener("click", () => openEdit(null, "home"));
+document.getElementById("btn-scan-photo").addEventListener("click", () => {
+  resetScanView();
+  navigate("scan");
+});
+
+/* ========================================================================
+   Lern-Setup
+   ======================================================================== */
+function populateLessonSelect(selectEl, lessons) {
+  const prevValue = selectEl.value;
+  selectEl.innerHTML = '<option value="">Alle Lektionen</option>';
+  lessons.forEach((lesson) => {
+    const opt = document.createElement("option");
+    opt.value = lesson;
+    opt.textContent = lesson;
+    selectEl.appendChild(opt);
+  });
+  if (lessons.includes(prevValue)) selectEl.value = prevValue;
+}
+
+function renderLearnSetup() {
+  populateLessonSelect(document.getElementById("lesson-filter"), getLessons());
+  updateLearnSetupInfo();
+}
+
+function buildSessionCards(lessonFilter) {
+  const vocabs = vocabCache.filter((v) => !lessonFilter || v.lesson === lessonFilter);
+  const cards = vocabs.filter((v) => v.count < TARGET).map((v) => ({ vocabId: v.id }));
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+  return cards;
+}
+
+function updateLearnSetupInfo() {
+  const lessonFilter = document.getElementById("lesson-filter").value;
+  const cards = buildSessionCards(lessonFilter);
+  const info = document.getElementById("learn-setup-info");
+  info.textContent = cards.length === 0 ? "🎉 In dieser Auswahl ist schon alles gelernt!" : `${cards.length} Abfragen warten auf dich.`;
+}
+
+document.getElementById("lesson-filter").addEventListener("change", updateLearnSetupInfo);
+
+document.getElementById("btn-begin-learning").addEventListener("click", () => {
+  const lessonFilter = document.getElementById("lesson-filter").value;
+  const cards = buildSessionCards(lessonFilter);
+  if (cards.length === 0) {
+    toast("Keine offenen Vokabeln in dieser Auswahl.");
+    return;
+  }
+  startSession(cards);
+});
+
+/* ========================================================================
+   Lernmodus
+   ======================================================================== */
+let session = null;
+
+function startSession(cards) {
+  session = { queue: cards, total: cards.length, done: 0 };
+  navigate("learn");
+  renderCurrentCard();
+}
+
+function vocabById(id) {
+  return vocabCache.find((v) => v.id === id);
+}
+
+/** Waehlt bis zu `count` zufaellige, eindeutige Ablenker-Vokabeln aus dem restlichen Wortschatz. */
+function buildDistractors(vocab, count) {
+  const pool = vocabCache.filter((v) => v.id !== vocab.id);
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  const correctLabel = vocab.de.join(" / ");
+  const used = new Set([normalize(correctLabel)]);
+  const picked = [];
+  for (const v of pool) {
+    const label = v.de.join(" / ");
+    const n = normalize(label);
+    if (used.has(n)) continue;
+    used.add(n);
+    picked.push(v);
+    if (picked.length >= count) break;
+  }
+  return picked;
+}
+
+function showTextAnswer() {
+  const choices = document.getElementById("choice-answers");
+  choices.hidden = true;
+  choices.innerHTML = "";
+
+  const input = document.getElementById("answer-input");
+  input.hidden = false;
+  input.value = "";
+  input.disabled = false;
+  document.getElementById("btn-check-answer").hidden = false;
+  input.focus();
+}
+
+function showChoiceAnswer(vocab) {
+  document.getElementById("answer-input").hidden = true;
+  document.getElementById("btn-check-answer").hidden = true;
+
+  const distractors = buildDistractors(vocab, 3);
+  const optionVocabs = [vocab, ...distractors];
+  for (let i = optionVocabs.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [optionVocabs[i], optionVocabs[j]] = [optionVocabs[j], optionVocabs[i]];
+  }
+
+  const container = document.getElementById("choice-answers");
+  container.innerHTML = "";
+  container.hidden = false;
+  optionVocabs.forEach((v) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "choice-btn";
+    btn.textContent = v.de.join(" / ");
+    btn.addEventListener("click", () => handleChoiceClick(btn, v.id === vocab.id));
+    container.appendChild(btn);
+  });
+}
+
+function renderCurrentCard() {
+  if (!session || session.queue.length === 0) {
+    finishSession();
+    return;
+  }
+  const card = session.queue[0];
+  const vocab = vocabById(card.vocabId);
+
+  document.getElementById("learn-progress-text").textContent = `${session.done} von ${session.total} richtig`;
+  document.getElementById("learn-progress-fill").style.width = `${Math.round((session.done / session.total) * 100)}%`;
+
+  const feedback = document.getElementById("feedback-box");
+  feedback.hidden = true;
+  feedback.className = "feedback-box";
+
+  document.getElementById("btn-next-card").hidden = true;
+  document.getElementById("card-word").textContent = vocab.la;
+
+  if (vocab.count < MULTIPLE_CHOICE_BELOW_COUNT) {
+    showChoiceAnswer(vocab);
+  } else {
+    showTextAnswer();
+  }
+}
+
+/** Wertet eine Antwort (eingetippt oder per Multiple Choice angeklickt) aus, aktualisiert Zaehler/Fortschritt. */
+async function processAnswer(correct) {
+  const card = session.queue.shift();
+  const vocab = vocabById(card.vocabId);
+
+  const feedback = document.getElementById("feedback-box");
+  feedback.hidden = false;
+
+  if (correct) {
+    vocab.count = Math.min(TARGET, vocab.count + 1);
+    await dbPut(vocab);
+    session.done++;
+
+    feedback.className = "feedback-box correct";
+    feedback.textContent = "Richtig! 🎉";
+  } else {
+    session.queue.push(card);
+
+    feedback.className = "feedback-box wrong";
+    feedback.textContent = `Richtig wäre: ${vocab.de.join(" / ")}`;
+  }
+
+  document.getElementById("learn-progress-text").textContent = `${session.done} von ${session.total} richtig`;
+  document.getElementById("learn-progress-fill").style.width = `${Math.round((session.done / session.total) * 100)}%`;
+
+  document.getElementById("answer-input").disabled = true;
+  document.getElementById("btn-check-answer").hidden = true;
+  document.getElementById("btn-next-card").hidden = false;
+  document.getElementById("btn-next-card").focus();
+
+  return { correct, vocab };
+}
+
+document.getElementById("answer-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const input = document.getElementById("answer-input");
+  if (input.hidden || input.disabled) return;
+  const raw = input.value;
+  if (!raw.trim()) {
+    input.focus();
+    return;
+  }
+  const card = session.queue[0];
+  const vocab = vocabById(card.vocabId);
+  await processAnswer(isAnyGermanWordMatch(raw, vocab.de));
+});
+
+async function handleChoiceClick(clickedBtn, isCorrectChoice) {
+  const buttons = Array.from(document.querySelectorAll("#choice-answers .choice-btn"));
+  if (buttons.some((b) => b.disabled)) return;
+  buttons.forEach((b) => (b.disabled = true));
+
+  const { correct, vocab } = await processAnswer(isCorrectChoice);
+
+  buttons.forEach((b) => {
+    if (normalize(b.textContent) === normalize(vocab.de.join(" / "))) {
+      b.classList.add("correct");
+    } else if (b === clickedBtn && !correct) {
+      b.classList.add("wrong");
+    }
+  });
+}
+
+document.getElementById("btn-next-card").addEventListener("click", renderCurrentCard);
+
+function finishSession() {
+  document.getElementById("learn-done-text").textContent = `Du hast ${session.done} Abfragen in dieser Runde richtig beantwortet.`;
+  session = null;
+  switchTo("learn-done");
+}
+
+document.getElementById("btn-done-home").addEventListener("click", () => {
+  viewStack.length = 0;
+  switchTo("home");
+});
+document.getElementById("btn-done-again").addEventListener("click", () => {
+  viewStack.length = 0;
+  switchTo("learn-setup");
+});
+
+/* ========================================================================
+   Vokabelliste
+   ======================================================================== */
+function renderList() {
+  populateLessonSelect(document.getElementById("list-lesson-filter"), getLessons());
+
+  const lessonFilter = document.getElementById("list-lesson-filter").value;
+  const statusFilter = document.getElementById("list-status-filter").value;
+
+  const items = vocabCache.filter((v) => {
+    if (lessonFilter && v.lesson !== lessonFilter) return false;
+    if (statusFilter === "learned" && !isLearned(v)) return false;
+    if (statusFilter === "open" && isLearned(v)) return false;
+    return true;
+  });
+
+  const ul = document.getElementById("vocab-list");
+  ul.innerHTML = "";
+
+  if (items.length === 0) {
+    const li = document.createElement("li");
+    li.className = "empty-state";
+    li.textContent = "Keine Vokabeln gefunden.";
+    ul.appendChild(li);
+    return;
+  }
+
+  items.forEach((v) => {
+    const li = document.createElement("li");
+    li.className = "vocab-item";
+    li.dataset.id = v.id;
+
+    const text = document.createElement("div");
+    text.className = "vocab-item-text";
+    const la = document.createElement("div");
+    la.className = "vocab-item-en";
+    la.textContent = v.la;
+    const de = document.createElement("div");
+    de.className = "vocab-item-de";
+    de.textContent = v.de.join(" / ");
+    text.appendChild(la);
+    text.appendChild(de);
+
+    const badges = document.createElement("div");
+    badges.className = "vocab-item-badges";
+    const b = document.createElement("span");
+    if (isLearned(v)) {
+      b.className = "badge done";
+      b.textContent = "✓ Gelernt";
+    } else {
+      b.className = "badge";
+      b.textContent = `${v.count}/${TARGET}`;
+    }
+    badges.appendChild(b);
+
+    li.appendChild(text);
+    li.appendChild(badges);
+    li.addEventListener("click", () => openEdit(v, "list"));
+    ul.appendChild(li);
+  });
+}
+
+document.getElementById("list-lesson-filter").addEventListener("change", renderList);
+document.getElementById("list-status-filter").addEventListener("change", renderList);
+document.getElementById("btn-list-add").addEventListener("click", () => openEdit(null, "list"));
+
+/* ========================================================================
+   Vokabel hinzufügen / bearbeiten
+   ======================================================================== */
+let editingId = null;
+
+function openEdit(vocab, returnTo) {
+  editingId = vocab ? vocab.id : null;
+  document.getElementById("input-la").value = vocab ? vocab.la : "";
+  document.getElementById("input-de").value = vocab ? vocab.de.join(", ") : "";
+  document.getElementById("input-lesson").value = vocab ? vocab.lesson || "" : "";
+  document.getElementById("btn-delete-vocab").hidden = !vocab;
+  TITLES.edit = vocab ? "Vokabel bearbeiten" : "Vokabel hinzufügen";
+  navigate("edit");
+  document.getElementById("page-title").textContent = TITLES.edit;
+  document.getElementById("input-la").focus();
+}
+
+document.getElementById("vocab-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const la = document.getElementById("input-la").value.trim();
+  const deRaw = document.getElementById("input-de").value;
+  const de = deRaw.split(",").map((s) => s.trim()).filter(Boolean);
+  const lesson = document.getElementById("input-lesson").value.trim();
+
+  if (!la || de.length === 0) {
+    toast("Bitte Latein und Deutsch ausfüllen.");
+    return;
+  }
+
+  if (editingId) {
+    const existing = vocabById(editingId);
+    existing.la = la;
+    existing.de = de;
+    existing.lesson = lesson;
+    await dbPut(existing);
+  } else {
+    await dbPut({ la, de, lesson, count: 0 });
+  }
+
+  await reloadVocabCache();
+  toast("Gespeichert ✓");
+  goBack();
+});
+
+document.getElementById("btn-delete-vocab").addEventListener("click", async () => {
+  if (!editingId) return;
+  if (!confirm("Diese Vokabel wirklich löschen?")) return;
+  await dbDelete(editingId);
+  await reloadVocabCache();
+  toast("Gelöscht");
+  goBack();
+});
+
+document.getElementById("btn-cancel-edit").addEventListener("click", goBack);
+
+/* ========================================================================
+   Foto-Scan — Texterkennung mit Tesseract.js (Latein + Deutsch)
+   ======================================================================== */
+const TESSERACT_SRC = "https://cdn.jsdelivr.net/npm/tesseract.js@7.0.0/dist/tesseract.min.js";
+let tesseractScriptPromise = null;
+
+function loadTesseractScript() {
+  if (window.Tesseract) return Promise.resolve();
+  if (tesseractScriptPromise) return tesseractScriptPromise;
+  tesseractScriptPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = TESSERACT_SRC;
+    script.onload = () => resolve();
+    script.onerror = () => {
+      tesseractScriptPromise = null;
+      reject(new Error("Texterkennung konnte nicht geladen werden. Internetverbindung prüfen."));
+    };
+    document.head.appendChild(script);
+  });
+  return tesseractScriptPromise;
+}
+
+const SCAN_STATUS_LABELS = {
+  "loading tesseract core": "Lade Erkennungs-Engine…",
+  "initializing tesseract": "Initialisiere…",
+  "loading language traineddata": "Lade Sprachdaten…",
+  "initializing api": "Bereite Erkennung vor…",
+  "recognizing text": "Erkenne Text…",
+};
+
+function setScanProgress(text, progress) {
+  document.getElementById("scan-progress-text").textContent = text;
+  document.getElementById("scan-progress-fill").style.width = Math.round((progress || 0) * 100) + "%";
+}
+
+async function recognizeImage(file, onProgress) {
+  const worker = await Tesseract.createWorker(["lat", "deu"], 1, {
+    logger: (m) => {
+      if (m.status) onProgress(SCAN_STATUS_LABELS[m.status] || "Verarbeite…", m.progress);
+    },
+  });
+  try {
+    const { data } = await worker.recognize(file, {}, { blocks: true });
+    return data;
+  } finally {
+    await worker.terminate();
+  }
+}
+
+function extractOcrLines(data) {
+  const lines = [];
+  (data.blocks || []).forEach((block) => {
+    (block.paragraphs || []).forEach((para) => {
+      (para.lines || []).forEach((line) => {
+        const words = (line.words || []).filter((w) => w.text && w.text.trim() && w.confidence > 25);
+        if (words.length > 0) lines.push(words.slice().sort((a, b) => a.bbox.x0 - b.bbox.x0));
+      });
+    });
+  });
+  return lines;
+}
+
+function findLineGapX(words) {
+  if (words.length < 2) return null;
+  let maxGap = -Infinity;
+  let gapX = null;
+  for (let i = 1; i < words.length; i++) {
+    const gap = words[i].bbox.x0 - words[i - 1].bbox.x1;
+    if (gap > maxGap) {
+      maxGap = gap;
+      gapX = (words[i].bbox.x0 + words[i - 1].bbox.x1) / 2;
+    }
+  }
+  const avgWidth = words.reduce((sum, w) => sum + (w.bbox.x1 - w.bbox.x0), 0) / words.length;
+  return maxGap > avgWidth * 0.9 && maxGap > 15 ? gapX : null;
+}
+
+/** Ordnet erkannte Zeilen anhand der Wortpositionen zweispaltig Latein | Deutsch zu. */
+function buildPairsFromOcrData(data) {
+  const lines = extractOcrLines(data);
+
+  const candidates = lines.map(findLineGapX).filter((x) => x !== null);
+  let globalSplit = null;
+  if (candidates.length > 0) {
+    candidates.sort((a, b) => a - b);
+    globalSplit = candidates[Math.floor(candidates.length / 2)];
+  }
+
+  const pairs = [];
+  lines.forEach((words) => {
+    const splitX = findLineGapX(words) ?? globalSplit;
+    if (splitX === null) {
+      pairs.push({ la: words.map((w) => w.text.trim()).join(" ").trim(), de: "" });
+      return;
+    }
+    const laWords = words.filter((w) => (w.bbox.x0 + w.bbox.x1) / 2 < splitX);
+    const deWords = words.filter((w) => (w.bbox.x0 + w.bbox.x1) / 2 >= splitX);
+    const la = laWords.map((w) => w.text.trim()).join(" ").trim();
+    const de = deWords.map((w) => w.text.trim()).join(" ").trim();
+    if (la || de) pairs.push({ la, de });
+  });
+  return pairs;
+}
+
+let scanRowCounter = 0;
+
+function resetScanView() {
+  document.getElementById("scan-step-pick").hidden = false;
+  document.getElementById("scan-step-progress").hidden = true;
+  document.getElementById("scan-step-correct").hidden = true;
+  const img = document.getElementById("scan-preview");
+  if (img.src && img.src.startsWith("blob:")) URL.revokeObjectURL(img.src);
+  img.src = "";
+  img.hidden = true;
+  document.getElementById("scan-rows").innerHTML = "";
+  document.getElementById("scan-lesson").value = "";
+  document.getElementById("scan-file-input").value = "";
+  scanRowCounter = 0;
+}
+
+function addScanRow(la, de) {
+  scanRowCounter++;
+  const row = document.createElement("div");
+  row.className = "scan-row";
+  row.innerHTML = `
+    <div class="scan-row-header">
+      <span class="scan-row-label">Paar ${scanRowCounter}</span>
+      <button type="button" class="icon-btn scan-row-delete" aria-label="Zeile löschen">🗑️</button>
+    </div>
+    <input type="text" class="text-input scan-row-la" placeholder="Latein" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <input type="text" class="text-input scan-row-de" placeholder="Deutsch" autocapitalize="off" autocorrect="off" spellcheck="false">
+  `;
+  row.querySelector(".scan-row-la").value = la || "";
+  row.querySelector(".scan-row-de").value = de || "";
+  row.querySelector(".scan-row-delete").addEventListener("click", () => {
+    row.remove();
+    document.querySelectorAll("#scan-rows .scan-row").forEach((r, idx) => {
+      r.querySelector(".scan-row-label").textContent = `Paar ${idx + 1}`;
+    });
+  });
+  document.getElementById("scan-rows").appendChild(row);
+}
+
+function showCorrectionRows(pairs) {
+  document.getElementById("scan-step-progress").hidden = true;
+  document.getElementById("scan-step-correct").hidden = false;
+  document.getElementById("scan-rows").innerHTML = "";
+  scanRowCounter = 0;
+
+  document.getElementById("scan-correct-info").textContent =
+    pairs.length === 0
+      ? "Keine Tabelle erkannt. Du kannst Zeilen manuell hinzufügen."
+      : `${pairs.length} Paare erkannt. Bitte prüfen, korrigieren oder löschen.`;
+
+  pairs.forEach((p) => addScanRow(p.la, p.de));
+  if (pairs.length === 0) addScanRow("", "");
+}
+
+document.getElementById("scan-file-input").addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const img = document.getElementById("scan-preview");
+  img.src = URL.createObjectURL(file);
+  img.hidden = false;
+  document.getElementById("scan-step-pick").hidden = true;
+  document.getElementById("scan-step-progress").hidden = false;
+  document.getElementById("scan-step-correct").hidden = true;
+  setScanProgress("Starte Texterkennung…", 0);
+
+  try {
+    await loadTesseractScript();
+    const data = await recognizeImage(file, setScanProgress);
+    const pairs = buildPairsFromOcrData(data);
+    showCorrectionRows(pairs);
+  } catch (err) {
+    toast(err && err.message ? err.message : "Texterkennung fehlgeschlagen.");
+    document.getElementById("scan-step-progress").hidden = true;
+    document.getElementById("scan-step-pick").hidden = false;
+  }
+});
+
+document.getElementById("btn-scan-add-row").addEventListener("click", () => addScanRow("", ""));
+
+document.getElementById("btn-scan-save").addEventListener("click", async () => {
+  const lesson = document.getElementById("scan-lesson").value.trim();
+  const rows = Array.from(document.querySelectorAll("#scan-rows .scan-row"));
+  const newVocab = [];
+  rows.forEach((row) => {
+    const la = row.querySelector(".scan-row-la").value.trim();
+    const de = row
+      .querySelector(".scan-row-de")
+      .value.split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    if (la && de.length > 0) {
+      newVocab.push({ la, de, lesson, count: 0 });
+    }
+  });
+
+  if (newVocab.length === 0) {
+    toast("Keine gültigen Vokabelpaare zum Speichern.");
+    return;
+  }
+
+  await dbBulkPut(newVocab);
+  await reloadVocabCache();
+  toast(`${newVocab.length} Vokabeln gespeichert ✓`);
+  resetScanView();
+  viewStack.length = 0;
+  switchTo("home");
+});
+
+document.getElementById("btn-scan-cancel").addEventListener("click", () => {
+  resetScanView();
+  goBack();
+});
+
+/* ========================================================================
+   Einstellungen
+   ======================================================================== */
+function renderSettings() {
+  document.getElementById("settings-message").textContent = "";
+}
+
+document.getElementById("btn-reset-progress").addEventListener("click", async () => {
+  if (!confirm("Lernfortschritt für alle Vokabeln wirklich zurücksetzen?")) return;
+  vocabCache.forEach((v) => {
+    v.count = 0;
+  });
+  await dbBulkPut(vocabCache);
+  document.getElementById("settings-message").textContent = "Fortschritt wurde zurückgesetzt.";
+  toast("Fortschritt zurückgesetzt");
+});
+
+document.getElementById("btn-delete-all").addEventListener("click", async () => {
+  if (!confirm(`Wirklich ALLE ${vocabCache.length} Vokabeln auf diesem Gerät unwiderruflich löschen?`)) return;
+  await dbClear();
+  await reloadVocabCache();
+  document.getElementById("settings-message").textContent = "Alle Vokabeln wurden gelöscht.";
+  toast("Alle Vokabeln gelöscht");
+});
+
+/* ---- Export ---- */
+document.getElementById("btn-export").addEventListener("click", async () => {
+  const data = { exportedAt: new Date().toISOString(), vocab: vocabCache };
+  const json = JSON.stringify(data, null, 2);
+  const stamp = new Date().toISOString().slice(0, 10);
+  const filename = `lateinvokabeln-export-${stamp}.json`;
+  const blob = new Blob([json], { type: "application/json" });
+
+  try {
+    const file = new File([blob], filename, { type: "application/json" });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], title: "Lateinvokabeln Export" });
+      return;
+    }
+  } catch (err) {
+    // Fallback unten
+  }
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+  document.getElementById("settings-message").textContent = "Export heruntergeladen.";
+});
+
+/* ---- Gemeinsame Import-Logik (Datei & Server) ---- */
+function cleanImportList(parsed) {
+  const list = Array.isArray(parsed) ? parsed : parsed.vocab;
+  if (!Array.isArray(list)) throw new Error("Ungültiges Format");
+
+  const cleaned = list
+    .filter((v) => v && typeof v.la === "string" && Array.isArray(v.de))
+    .map((v) => ({
+      ...(typeof v.id === "number" ? { id: v.id } : {}),
+      la: v.la,
+      de: v.de,
+      lesson: v.lesson || "",
+      count: Number.isInteger(v.count) ? v.count : 0,
+    }));
+
+  if (cleaned.length === 0) throw new Error("Keine Vokabeln gefunden");
+  return cleaned;
+}
+
+/**
+ * Gleicht importierte Einträge ohne numerische ID gegen vorhandene Vokabeln ab (per Latein-Wort),
+ * damit ein erneuter Import/Sync bestehende Einträge aktualisiert statt Dubletten anzulegen.
+ * Vorhandener Lernfortschritt (Zähler) bleibt dabei erhalten.
+ */
+function mergeAgainstExisting(cleaned) {
+  const byLa = new Map(vocabCache.map((v) => [normalize(v.la), v]));
+  return cleaned.map((item) => {
+    const existing = item.id != null ? vocabById(item.id) : byLa.get(normalize(item.la));
+    if (existing) {
+      return { id: existing.id, la: item.la, de: item.de, lesson: item.lesson, count: existing.count };
+    }
+    return item;
+  });
+}
+
+async function applyImport(cleaned) {
+  const merged = mergeAgainstExisting(cleaned);
+  const newCount = merged.filter((v) => v.id == null).length;
+  const updateCount = merged.length - newCount;
+  if (!confirm(`${newCount} neue Vokabeln hinzufügen, ${updateCount} vorhandene aktualisieren?`)) return false;
+  await dbBulkPut(merged);
+  await reloadVocabCache();
+  document.getElementById("settings-message").textContent = `${merged.length} Vokabeln importiert.`;
+  toast("Import erfolgreich ✓");
+  return true;
+}
+
+/* ---- Import aus Datei ---- */
+document.getElementById("btn-import").addEventListener("click", () => {
+  document.getElementById("import-file-input").click();
+});
+
+document.getElementById("import-file-input").addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  e.target.value = "";
+  if (!file) return;
+
+  try {
+    const text = await file.text();
+    const cleaned = cleanImportList(JSON.parse(text));
+    await applyImport(cleaned);
+  } catch (err) {
+    document.getElementById("settings-message").textContent = "Import fehlgeschlagen: Datei ungültig.";
+    toast("Import fehlgeschlagen");
+  }
+});
+
+/* ---- Zentrale Vokabelliste vom Server laden ---- */
+document.getElementById("btn-load-server").addEventListener("click", async () => {
+  const msg = document.getElementById("settings-message");
+  msg.textContent = "Lade Vokabelliste vom Server…";
+  try {
+    const res = await fetch("data/vokabeln.json?t=" + Date.now(), { cache: "no-store" });
+    if (!res.ok) throw new Error("Server antwortet mit Fehler " + res.status);
+    const cleaned = cleanImportList(await res.json());
+    const applied = await applyImport(cleaned);
+    if (!applied) msg.textContent = "";
+  } catch (err) {
+    msg.textContent = "Laden fehlgeschlagen. Internetverbindung prüfen.";
+    toast("Laden vom Server fehlgeschlagen");
+  }
+});
+
+/* ========================================================================
+   Service Worker
+   ======================================================================== */
+if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("service-worker.js").catch(() => {});
+  });
+
+  let swRefreshing = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (swRefreshing) return;
+    swRefreshing = true;
+    location.reload();
+  });
+}
+
+/* ========================================================================
+   Start
+   ======================================================================== */
+(async function init() {
+  await seedIfEmpty();
+  await reloadVocabCache();
+  switchTo("home");
+})();

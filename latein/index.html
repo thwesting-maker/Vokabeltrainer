@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Lateintrainer</title>
+
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#9b2a2a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Latein">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <button id="btn-back" class="icon-btn" hidden aria-label="Zurück">←</button>
+  <h1 id="page-title">Lateintrainer</h1>
+  <button id="btn-settings" class="icon-btn" aria-label="Einstellungen">⚙️</button>
+</header>
+
+<main id="app">
+
+  <!-- ===== START / HOME ===== -->
+  <section id="view-home" class="view">
+    <div class="home-stats" id="home-stats">
+      <p class="stat-big"><span id="stat-learned">0</span> von <span id="stat-total">0</span> gelernt</p>
+      <div class="progress-bar"><div id="home-progress-fill" class="progress-fill"></div></div>
+    </div>
+
+    <div class="button-stack">
+      <button class="btn btn-primary btn-large" id="btn-start-learn">📚 Lernen starten</button>
+      <button class="btn btn-secondary btn-large" id="btn-vocab-list">📋 Alle Vokabeln</button>
+      <button class="btn btn-secondary btn-large" id="btn-add-vocab">➕ Vokabel hinzufügen</button>
+      <button class="btn btn-secondary btn-large" id="btn-scan-photo">📷 Vokabeln scannen</button>
+    </div>
+  </section>
+
+  <!-- ===== LERN-SETUP ===== -->
+  <section id="view-learn-setup" class="view">
+    <h2>Lektion (optional)</h2>
+    <select id="lesson-filter" class="select-input">
+      <option value="">Alle Lektionen</option>
+    </select>
+
+    <p id="learn-setup-info" class="hint-text"></p>
+
+    <button class="btn btn-primary btn-large" id="btn-begin-learning" style="margin-top:20px;">Los geht's</button>
+  </section>
+
+  <!-- ===== LERNMODUS ===== -->
+  <section id="view-learn" class="view">
+    <div class="learn-progress">
+      <div class="progress-bar"><div id="learn-progress-fill" class="progress-fill"></div></div>
+      <p id="learn-progress-text" class="hint-text"></p>
+    </div>
+
+    <div class="flashcard">
+      <p class="card-direction">Latein → Deutsch</p>
+      <p class="card-word" id="card-word">—</p>
+    </div>
+
+    <form id="answer-form" autocomplete="off">
+      <input type="text" id="answer-input" class="text-input" placeholder="Deutsch eingeben…" autocapitalize="off" autocorrect="off" spellcheck="false">
+      <div id="choice-answers" class="choice-group" hidden></div>
+      <div id="feedback-box" class="feedback-box" hidden></div>
+      <button type="submit" class="btn btn-primary btn-large" id="btn-check-answer">Prüfen</button>
+      <button type="button" class="btn btn-secondary btn-large" id="btn-next-card" hidden>Weiter →</button>
+    </form>
+  </section>
+
+  <!-- ===== LERNEN FERTIG ===== -->
+  <section id="view-learn-done" class="view">
+    <div class="done-box">
+      <p class="done-emoji">🎉</p>
+      <h2>Runde geschafft!</h2>
+      <p id="learn-done-text" class="hint-text"></p>
+      <div class="button-stack">
+        <button class="btn btn-primary btn-large" id="btn-done-home">Zur Startseite</button>
+        <button class="btn btn-secondary btn-large" id="btn-done-again">Nochmal lernen</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VOKABELLISTE ===== -->
+  <section id="view-list" class="view">
+    <div class="list-toolbar">
+      <select id="list-lesson-filter" class="select-input">
+        <option value="">Alle Lektionen</option>
+      </select>
+      <select id="list-status-filter" class="select-input">
+        <option value="">Alle</option>
+        <option value="learned">Gelernt</option>
+        <option value="open">Noch offen</option>
+      </select>
+    </div>
+    <ul id="vocab-list" class="vocab-list"></ul>
+    <button class="btn btn-primary btn-large fixed-bottom-btn" id="btn-list-add">➕ Neue Vokabel</button>
+  </section>
+
+  <!-- ===== VOKABEL HINZUFÜGEN / BEARBEITEN ===== -->
+  <section id="view-edit" class="view">
+    <form id="vocab-form">
+      <label class="form-label" for="input-la">Latein</label>
+      <input type="text" id="input-la" class="text-input" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+
+      <label class="form-label" for="input-de">Deutsch <small>(mehrere Übersetzungen mit Komma trennen)</small></label>
+      <input type="text" id="input-de" class="text-input" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+
+      <label class="form-label" for="input-lesson">Lektion (optional)</label>
+      <input type="text" id="input-lesson" class="text-input" autocapitalize="off" autocorrect="off">
+
+      <div class="button-stack" style="margin-top:20px;">
+        <button type="submit" class="btn btn-primary btn-large" id="btn-save-vocab">Speichern</button>
+        <button type="button" class="btn btn-danger btn-large" id="btn-delete-vocab" hidden>Löschen</button>
+        <button type="button" class="btn btn-secondary btn-large" id="btn-cancel-edit">Abbrechen</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ===== FOTO-SCAN ===== -->
+  <section id="view-scan" class="view">
+    <div id="scan-step-pick">
+      <p class="hint-text">Fotografiere eine Buchseite mit einer zweispaltigen Vokabeltabelle (Latein | Deutsch) oder wähle ein vorhandenes Foto bzw. einen Screenshot aus.</p>
+      <label class="btn btn-primary btn-large" id="btn-pick-photo-label" for="scan-file-input">📷 Foto wählen</label>
+      <input type="file" id="scan-file-input" accept="image/*" hidden>
+    </div>
+
+    <img id="scan-preview" alt="Ausgewähltes Foto" hidden>
+
+    <div id="scan-step-progress" hidden>
+      <p class="hint-text" id="scan-progress-text">Texterkennung läuft…</p>
+      <div class="progress-bar"><div id="scan-progress-fill" class="progress-fill"></div></div>
+    </div>
+
+    <div id="scan-step-correct" hidden>
+      <label class="form-label" for="scan-lesson">Lektion (optional, für alle)</label>
+      <input type="text" id="scan-lesson" class="text-input" autocapitalize="off" autocorrect="off">
+
+      <p class="hint-text" id="scan-correct-info"></p>
+
+      <div id="scan-rows"></div>
+
+      <button type="button" class="btn btn-secondary btn-large" id="btn-scan-add-row">➕ Zeile hinzufügen</button>
+
+      <div class="button-stack" style="margin-top:20px;">
+        <button type="button" class="btn btn-primary btn-large" id="btn-scan-save">Vokabeln speichern</button>
+        <button type="button" class="btn btn-secondary btn-large" id="btn-scan-cancel">Abbrechen</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EINSTELLUNGEN ===== -->
+  <section id="view-settings" class="view">
+    <h2>Zentrale Vokabelliste</h2>
+    <div class="button-stack">
+      <button class="btn btn-primary btn-large" id="btn-load-server">☁️ Vokabeln vom Server laden</button>
+    </div>
+    <p class="hint-text">Lädt die gemeinsame Vokabelliste direkt – wird hinzugefügt bzw. aktualisiert, nichts wird gelöscht.</p>
+
+    <h2>Backup</h2>
+    <div class="button-stack">
+      <button class="btn btn-secondary btn-large" id="btn-export">⬇️ Vokabeln exportieren</button>
+      <button class="btn btn-secondary btn-large" id="btn-import">⬆️ Vokabeln aus Datei importieren</button>
+      <input type="file" id="import-file-input" accept="application/json" hidden>
+    </div>
+
+    <h2>Fortschritt</h2>
+    <div class="button-stack">
+      <button class="btn btn-danger btn-large" id="btn-reset-progress">🔄 Lernfortschritt zurücksetzen</button>
+    </div>
+
+    <h2>Gefahrenzone</h2>
+    <div class="button-stack">
+      <button class="btn btn-danger btn-large" id="btn-delete-all">🗑️ Alle Vokabeln löschen</button>
+    </div>
+
+    <p id="settings-message" class="hint-text"></p>
+  </section>
+
+</main>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
