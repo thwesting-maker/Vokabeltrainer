@@ -1,15 +1,770 @@
 {
-  "exportedAt": "2026-10-23T00:00:00.000Z",
+  "exportedAt": "2026-10-27T00:00:00.000Z",
   "vocab": [
-    { "la": "amare", "de": ["lieben"], "lesson": "Beispiele", "count": 0 },
-    { "la": "videre", "de": ["sehen"], "lesson": "Beispiele", "count": 0 },
-    { "la": "puella", "de": ["Mädchen"], "lesson": "Beispiele", "count": 0 },
-    { "la": "puer", "de": ["Junge"], "lesson": "Beispiele", "count": 0 },
-    { "la": "aqua", "de": ["Wasser"], "lesson": "Beispiele", "count": 0 },
-    { "la": "terra", "de": ["Erde", "Land"], "lesson": "Beispiele", "count": 0 },
-    { "la": "magnus", "de": ["groß"], "lesson": "Beispiele", "count": 0 },
-    { "la": "bonus", "de": ["gut"], "lesson": "Beispiele", "count": 0 },
-    { "la": "dicere", "de": ["sagen"], "lesson": "Beispiele", "count": 0 },
-    { "la": "venire", "de": ["kommen"], "lesson": "Beispiele", "count": 0 }
+    {
+      "la": "Salvē!",
+      "de": [
+        "Sei gegrüßt!"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "pater",
+      "de": [
+        "Vater"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "māter",
+      "de": [
+        "Mutter"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "fīlius",
+      "de": [
+        "Sohn"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "fīlia",
+      "de": [
+        "Tochter"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "avus",
+      "de": [
+        "Großvater"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "servus",
+      "de": [
+        "Sklave"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "serva",
+      "de": [
+        "Sklavin"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "catella",
+      "de": [
+        "Hündchen"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "hīc",
+      "de": [
+        "hier"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "est",
+      "de": [
+        "er/sie/es ist",
+        "es gibt"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "dominus",
+      "de": [
+        "Herr",
+        "Hausherr"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "clāmat",
+      "de": [
+        "er/sie/es ruft"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "venit",
+      "de": [
+        "er/sie/es kommt"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "domina",
+      "de": [
+        "Herrin"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "labōrat",
+      "de": [
+        "er/sie/es arbeitet"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "lūdit",
+      "de": [
+        "er/sie/es spielt"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "cantat",
+      "de": [
+        "er/sie/es singt"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "et",
+      "de": [
+        "und"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "gaudet",
+      "de": [
+        "er/sie/es freut sich"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "currit",
+      "de": [
+        "er/sie/es läuft"
+      ],
+      "lesson": "Salve",
+      "count": 0
+    },
+    {
+      "la": "nam",
+      "de": [
+        "denn"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "hodiē",
+      "de": [
+        "heute"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "familia",
+      "de": [
+        "Hausgemeinschaft"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "exspectat",
+      "de": [
+        "er/sie/es erwartet"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "subitō",
+      "de": [
+        "plötzlich"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "clāmor",
+      "de": [
+        "Lärm",
+        "Krach",
+        "Geschrei"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "audit",
+      "de": [
+        "er/sie/es hört"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "rogat",
+      "de": [
+        "er/sie/es fragt"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "quid?",
+      "de": [
+        "was?"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "quaerit",
+      "de": [
+        "er/sie/es sucht"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "nōn",
+      "de": [
+        "nicht"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "videt",
+      "de": [
+        "er/sie/es sieht"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "sed",
+      "de": [
+        "aber",
+        "sondern"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "ubi?",
+      "de": [
+        "wo?"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "ecce!",
+      "de": [
+        "sieh da!",
+        "sieh!"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "intrat",
+      "de": [
+        "er/sie/es betritt"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "tum",
+      "de": [
+        "dann",
+        "darauf"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "ibi",
+      "de": [
+        "dort"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "nunc",
+      "de": [
+        "nun",
+        "jetzt"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "etiam",
+      "de": [
+        "auch"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "rīdet",
+      "de": [
+        "er/sie/es lacht"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "tenet",
+      "de": [
+        "er/sie/es hält"
+      ],
+      "lesson": "Lektion 1",
+      "count": 0
+    },
+    {
+      "la": "amāre",
+      "de": [
+        "lieben",
+        "mögen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "soror",
+      "de": [
+        "Schwester"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "respondēre",
+      "de": [
+        "antworten"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "iterum",
+      "de": [
+        "wieder"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "cōnspicere",
+      "de": [
+        "erblicken",
+        "sehen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "fugere",
+      "de": [
+        "fliehen",
+        "meiden"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "capere",
+      "de": [
+        "fangen",
+        "ergreifen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "puer",
+      "de": [
+        "Kind",
+        "Junge"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "puella",
+      "de": [
+        "Mädchen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "frāter",
+      "de": [
+        "Bruder"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "itaque",
+      "de": [
+        "deshalb"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "sunt",
+      "de": [
+        "sie sind"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "culīna",
+      "de": [
+        "Küche"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "dēbēre",
+      "de": [
+        "müssen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "nōn dēbēre",
+      "de": [
+        "nicht dürfen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "cupere",
+      "de": [
+        "wollen",
+        "wünschen",
+        "mögen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "adhūc",
+      "de": [
+        "bis jetzt",
+        "noch"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "līberī",
+      "de": [
+        "Kinder"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "vir",
+      "de": [
+        "Mann"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "ātrium",
+      "de": [
+        "Atrium"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "ōtium",
+      "de": [
+        "Ruhe",
+        "Freizeit"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "parentēs",
+      "de": [
+        "Eltern"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "peristȳlium",
+      "de": [
+        "Peristyl"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "officium",
+      "de": [
+        "Pflicht"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "explēre",
+      "de": [
+        "erfüllen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "Salvēte!",
+      "de": [
+        "Seid gegrüßt!"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "dīcere",
+      "de": [
+        "sagen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "statim",
+      "de": [
+        "sofort"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "incipere",
+      "de": [
+        "anfangen",
+        "beginnen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "cūr?",
+      "de": [
+        "warum?"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "semper",
+      "de": [
+        "immer"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "labor",
+      "de": [
+        "Mühe",
+        "Arbeit"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "placēre",
+      "de": [
+        "gefallen",
+        "Spaß machen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "pergere",
+      "de": [
+        "etwas weiter tun",
+        "fortsetzen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "esse",
+      "de": [
+        "sein"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "clāmāre",
+      "de": [
+        "rufen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "venīre",
+      "de": [
+        "kommen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "labōrāre",
+      "de": [
+        "arbeiten"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "lūdere",
+      "de": [
+        "spielen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "cantāre",
+      "de": [
+        "singen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "gaudēre",
+      "de": [
+        "sich freuen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "currere",
+      "de": [
+        "laufen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "exspectāre",
+      "de": [
+        "erwarten"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "audīre",
+      "de": [
+        "hören"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "rogāre",
+      "de": [
+        "fragen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "quaerere",
+      "de": [
+        "suchen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "vidēre",
+      "de": [
+        "sehen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "intrāre",
+      "de": [
+        "betreten"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "rīdēre",
+      "de": [
+        "lachen"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    },
+    {
+      "la": "tenēre",
+      "de": [
+        "halten"
+      ],
+      "lesson": "Lektion 2",
+      "count": 0
+    }
   ]
 }
