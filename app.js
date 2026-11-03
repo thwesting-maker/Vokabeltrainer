@@ -179,6 +179,214 @@ function toast(msg, ms = 2200) {
 }
 
 /* ========================================================================
+   Tagesziel & Kalender
+   ======================================================================== */
+const GOAL_SECONDS = 5 * 60;
+const ACTIVITY_KEY = "vokabeltrainer.activity";
+
+function dateKey(d) {
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+function todayKey() {
+  return dateKey(new Date());
+}
+
+function loadActivity() {
+  try {
+    return JSON.parse(localStorage.getItem(ACTIVITY_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
+function saveActivity(activity) {
+  localStorage.setItem(ACTIVITY_KEY, JSON.stringify(activity));
+}
+
+function formatMinSec(totalSeconds) {
+  const s = Math.max(0, Math.round(totalSeconds));
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+}
+
+/** Markiert "heute" als erledigt, wenn gerade nichts mehr zu lernen ist (unabhängig von der Lernzeit). */
+function refreshWaivedForToday() {
+  const nothingToLearn = vocabCache.length > 0 && vocabCache.every(isLearned);
+  if (!nothingToLearn) return;
+  const activity = loadActivity();
+  const key = todayKey();
+  const entry = activity[key] || { seconds: 0, waived: false };
+  if (!entry.waived) {
+    entry.waived = true;
+    activity[key] = entry;
+    saveActivity(activity);
+  }
+}
+
+function addLearnSeconds(seconds) {
+  if (seconds <= 0) return;
+  const activity = loadActivity();
+  const key = todayKey();
+  const entry = activity[key] || { seconds: 0, waived: false };
+  entry.seconds += seconds;
+  activity[key] = entry;
+  saveActivity(activity);
+}
+
+/* ---- Stoppuhr fuers Lernen: laeuft nur, waehrend die Lern-Ansicht sichtbar & aktiv ist ---- */
+let learnTimerStart = null;
+
+function startLearnTimer() {
+  if (learnTimerStart !== null) return;
+  learnTimerStart = Date.now();
+}
+function pauseLearnTimer() {
+  if (learnTimerStart === null) return;
+  const elapsedSeconds = (Date.now() - learnTimerStart) / 1000;
+  learnTimerStart = null;
+  addLearnSeconds(elapsedSeconds);
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    pauseLearnTimer();
+  } else if (currentViewId === "learn") {
+    startLearnTimer();
+  }
+});
+window.addEventListener("pagehide", pauseLearnTimer);
+
+function computeStreak(activity) {
+  let streak = 0;
+  for (let i = 0; ; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const entry = activity[dateKey(d)];
+    const met = entry && (entry.waived || entry.seconds >= GOAL_SECONDS);
+    if (met) {
+      streak++;
+      continue;
+    }
+    if (i === 0) continue; // heutiger Tag ist noch nicht vorbei
+    break;
+  }
+  return streak;
+}
+
+function renderGoalCard() {
+  refreshWaivedForToday();
+  const activity = loadActivity();
+  const todayEntry = activity[todayKey()] || { seconds: 0, waived: false };
+  const met = todayEntry.waived || todayEntry.seconds >= GOAL_SECONDS;
+
+  const card = document.getElementById("goal-card");
+  card.classList.toggle("met", met);
+
+  const title = document.getElementById("goal-card-title");
+  title.textContent = todayEntry.waived
+    ? "🎉 Heute schon alles gelernt!"
+    : `${met ? "✅" : "⏱"} ${formatMinSec(todayEntry.seconds)} / 5:00 Min. heute`;
+
+  const pct = Math.min(100, Math.round((todayEntry.seconds / GOAL_SECONDS) * 100));
+  document.getElementById("goal-progress-fill").style.width = (todayEntry.waived ? 100 : pct) + "%";
+
+  const streak = computeStreak(activity);
+  const streakEl = document.getElementById("goal-card-streak");
+  if (streak >= 2) {
+    streakEl.hidden = false;
+    streakEl.textContent = `🔥 ${streak} Tage in Folge`;
+  } else {
+    streakEl.hidden = true;
+  }
+}
+
+document.getElementById("btn-open-calendar").addEventListener("click", () => navigate("calendar"));
+
+let calendarYear = null;
+let calendarMonth = null; // 0-indexiert
+
+const MONTH_NAMES = [
+  "Januar", "Februar", "März", "April", "Mai", "Juni",
+  "Juli", "August", "September", "Oktober", "November", "Dezember",
+];
+
+function renderCalendar() {
+  if (calendarYear === null) {
+    const now = new Date();
+    calendarYear = now.getFullYear();
+    calendarMonth = now.getMonth();
+  }
+  document.getElementById("calendar-title").textContent = `${MONTH_NAMES[calendarMonth]} ${calendarYear}`;
+
+  const activity = loadActivity();
+  const grid = document.getElementById("calendar-grid");
+  grid.innerHTML = "";
+
+  ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].forEach((d) => {
+    const el = document.createElement("div");
+    el.className = "calendar-weekday";
+    el.textContent = d;
+    grid.appendChild(el);
+  });
+
+  const firstOfMonth = new Date(calendarYear, calendarMonth, 1);
+  const firstWeekday = (firstOfMonth.getDay() + 6) % 7; // Montag = 0
+  const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+  const todayStr = todayKey();
+
+  for (let i = 0; i < firstWeekday; i++) {
+    const el = document.createElement("div");
+    el.className = "calendar-day empty";
+    grid.appendChild(el);
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dStr = `${calendarYear}-${String(calendarMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    const entry = activity[dStr];
+
+    const el = document.createElement("div");
+    el.className = "calendar-day";
+    if (dStr === todayStr) el.classList.add("today");
+
+    const num = document.createElement("span");
+    num.className = "calendar-day-num";
+    num.textContent = String(day);
+    el.appendChild(num);
+
+    const mark = document.createElement("span");
+    mark.className = "calendar-day-mark";
+    if (entry && entry.waived) {
+      mark.textContent = "✓";
+      el.classList.add("waived");
+    } else if (entry && entry.seconds >= GOAL_SECONDS) {
+      mark.textContent = "⭐";
+      el.classList.add("met");
+    } else if (entry && entry.seconds > 0) {
+      mark.textContent = "•";
+      el.classList.add("partial");
+    }
+    el.appendChild(mark);
+
+    grid.appendChild(el);
+  }
+}
+
+document.getElementById("btn-calendar-prev").addEventListener("click", () => {
+  calendarMonth--;
+  if (calendarMonth < 0) {
+    calendarMonth = 11;
+    calendarYear--;
+  }
+  renderCalendar();
+});
+document.getElementById("btn-calendar-next").addEventListener("click", () => {
+  calendarMonth++;
+  if (calendarMonth > 11) {
+    calendarMonth = 0;
+    calendarYear++;
+  }
+  renderCalendar();
+});
+
+/* ========================================================================
    Sprachausgabe (Web Speech API)
    ======================================================================== */
 let voicesCache = [];
@@ -278,6 +486,7 @@ const TITLES = {
   edit: "Vokabel",
   settings: "Einstellungen",
   scan: "Vokabeln scannen",
+  calendar: "Kalender",
 };
 
 let currentViewId = "home";
@@ -288,15 +497,20 @@ const renderers = {
   "learn-setup": renderLearnSetup,
   list: renderList,
   settings: renderSettings,
+  calendar: renderCalendar,
 };
 
 function switchTo(viewId) {
+  if (currentViewId === "learn" && viewId !== "learn") pauseLearnTimer();
+
   document.querySelectorAll(".view").forEach((el) => el.classList.remove("active"));
   document.getElementById("view-" + viewId).classList.add("active");
   currentViewId = viewId;
   document.getElementById("page-title").textContent = TITLES[viewId] || "";
   document.getElementById("btn-back").hidden = viewStack.length === 0;
   if (renderers[viewId]) renderers[viewId]();
+
+  if (viewId === "learn") startLearnTimer();
 }
 
 function navigate(viewId) {
@@ -322,6 +536,7 @@ function renderHome() {
   document.getElementById("stat-total").textContent = total;
   const pct = total === 0 ? 0 : Math.round((learned / total) * 100);
   document.getElementById("home-progress-fill").style.width = pct + "%";
+  renderGoalCard();
 }
 
 document.getElementById("btn-start-learn").addEventListener("click", () => navigate("learn-setup"));
