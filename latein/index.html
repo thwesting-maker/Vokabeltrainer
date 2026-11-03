@@ -32,6 +32,15 @@
       <div class="progress-bar"><div id="home-progress-fill" class="progress-fill"></div></div>
     </div>
 
+    <div class="goal-card" id="goal-card">
+      <div class="goal-card-head">
+        <p class="goal-card-title" id="goal-card-title">⏱ 0:00 / 5:00 Min. heute</p>
+        <p class="goal-card-streak" id="goal-card-streak" hidden></p>
+      </div>
+      <div class="progress-bar"><div id="goal-progress-fill" class="progress-fill"></div></div>
+      <button class="btn btn-secondary" id="btn-open-calendar" style="margin-top:12px;">📅 Kalender</button>
+    </div>
+
     <div class="button-stack">
       <button class="btn btn-primary btn-large" id="btn-start-learn">📚 Lernen starten</button>
       <button class="btn btn-secondary btn-large" id="btn-vocab-list">📋 Alle Vokabeln</button>
@@ -180,6 +189,21 @@
     </div>
 
     <p id="settings-message" class="hint-text"></p>
+  </section>
+
+  <!-- ===== KALENDER ===== -->
+  <section id="view-calendar" class="view">
+    <div class="calendar-nav">
+      <button class="icon-btn" id="btn-calendar-prev" aria-label="Vorheriger Monat">‹</button>
+      <p class="calendar-title" id="calendar-title">—</p>
+      <button class="icon-btn" id="btn-calendar-next" aria-label="Nächster Monat">›</button>
+    </div>
+    <div class="calendar-grid" id="calendar-grid"></div>
+    <div class="calendar-legend">
+      <p><span class="calendar-legend-dot met">⭐</span> Tagesziel erreicht (5 Min.)</p>
+      <p><span class="calendar-legend-dot waived">✓</span> Nichts mehr zu lernen an dem Tag</p>
+      <p><span class="calendar-legend-dot partial">•</span> Etwas gelernt, Ziel noch nicht erreicht</p>
+    </div>
   </section>
 
 </main>

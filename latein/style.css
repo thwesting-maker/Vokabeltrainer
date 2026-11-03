@@ -124,6 +124,93 @@ h2 { font-size: 1.05rem; color: var(--text-soft); margin-top: 24px; }
   transition: width .3s ease;
 }
 
+/* ===== Tagesziel ===== */
+.goal-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+.goal-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.goal-card-title { font-weight: 700; margin: 0; }
+.goal-card-streak { margin: 0; font-size: .9rem; color: var(--text-soft); white-space: nowrap; }
+.goal-card.met .goal-card-title { color: var(--green); }
+.btn-secondary.btn-small,
+.goal-card .btn { padding: 10px 16px; font-size: .95rem; min-height: auto; }
+
+/* ===== Kalender ===== */
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.calendar-title { font-weight: 700; font-size: 1.05rem; margin: 0; }
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 16px;
+}
+.calendar-weekday {
+  text-align: center;
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  padding-bottom: 4px;
+}
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  font-size: .85rem;
+  gap: 2px;
+}
+.calendar-day.empty { background: transparent; border-color: transparent; }
+.calendar-day.today { border-color: var(--accent); border-width: 2px; }
+.calendar-day-num { font-weight: 600; }
+.calendar-day-mark { font-size: .75rem; line-height: 1; min-height: 12px; }
+.calendar-day.met { background: #e7f8ee; }
+.calendar-day.met .calendar-day-num { color: var(--green); }
+.calendar-day.waived { background: #eef4f1; }
+.calendar-day.waived .calendar-day-num { color: var(--text-soft); }
+.calendar-day.partial { background: #fff6e3; }
+
+.calendar-legend p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .85rem;
+  color: var(--text-soft);
+  margin: 6px 0;
+}
+.calendar-legend-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: .8rem;
+  flex-shrink: 0;
+}
+.calendar-legend-dot.met { background: #e7f8ee; }
+.calendar-legend-dot.waived { background: #eef4f1; }
+.calendar-legend-dot.partial { background: #fff6e3; }
+
 /* ===== Choice buttons ===== */
 .choice-group {
   display: flex;
@@ -373,4 +460,10 @@ h2 { font-size: 1.05rem; color: var(--text-soft); margin-top: 24px; }
   .feedback-box.correct { background: #163827; }
   .feedback-box.wrong { background: #3a1f20; }
   .badge.done { background: #163827; }
+  .calendar-day.met,
+  .calendar-legend-dot.met { background: #163827; }
+  .calendar-day.waived,
+  .calendar-legend-dot.waived { background: #232a29; }
+  .calendar-day.partial,
+  .calendar-legend-dot.partial { background: #3a3220; }
 }
