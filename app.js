@@ -207,6 +207,29 @@ function formatMinSec(totalSeconds) {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 }
 
+/** Konfetti-Burst als kleine Belohnung, wenn das Tagesziel erreicht wird. */
+function celebrate() {
+  const colors = ["#ffc43d", "#4a7cf5", "#35b36b", "#e5484d", "#9b6bd6"];
+  const container = document.createElement("div");
+  container.className = "confetti-container";
+  document.body.appendChild(container);
+  for (let i = 0; i < 28; i++) {
+    const piece = document.createElement("span");
+    piece.className = "confetti-piece";
+    piece.style.left = Math.random() * 100 + "vw";
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = Math.random() * 0.3 + "s";
+    piece.style.animationDuration = 1.4 + Math.random() * 0.8 + "s";
+    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+    container.appendChild(piece);
+  }
+  setTimeout(() => container.remove(), 2600);
+}
+
+// Wird gesetzt, sobald das Tagesziel gerade frisch erreicht wurde, und beim naechsten
+// renderGoalCard() einmalig konsumiert, um das Konfetti genau dann auszuloesen.
+let goalJustReached = false;
+
 /** Markiert "heute" als erledigt, wenn gerade nichts mehr zu lernen ist (unabhängig von der Lernzeit). */
 function refreshWaivedForToday() {
   const nothingToLearn = vocabCache.length > 0 && vocabCache.every(isLearned);
@@ -218,6 +241,7 @@ function refreshWaivedForToday() {
     entry.waived = true;
     activity[key] = entry;
     saveActivity(activity);
+    goalJustReached = true;
   }
 }
 
@@ -226,9 +250,13 @@ function addLearnSeconds(seconds) {
   const activity = loadActivity();
   const key = todayKey();
   const entry = activity[key] || { seconds: 0, waived: false };
+  const wasMet = entry.seconds >= GOAL_SECONDS;
   entry.seconds += seconds;
   activity[key] = entry;
   saveActivity(activity);
+  if (!wasMet && entry.seconds >= GOAL_SECONDS) {
+    goalJustReached = true;
+  }
 }
 
 /* ---- Stoppuhr fuers Lernen: laeuft nur, waehrend die Lern-Ansicht sichtbar & aktiv ist ---- */
@@ -287,6 +315,11 @@ function renderGoalCard() {
 
   const pct = Math.min(100, Math.round((todayEntry.seconds / GOAL_SECONDS) * 100));
   document.getElementById("goal-progress-fill").style.width = (todayEntry.waived ? 100 : pct) + "%";
+
+  if (goalJustReached) {
+    goalJustReached = false;
+    celebrate();
+  }
 
   const streak = computeStreak(activity);
   const streakEl = document.getElementById("goal-card-streak");
@@ -1342,6 +1375,17 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
     location.reload();
   });
 }
+
+/* ========================================================================
+   Kleiner Bounce beim Antippen von Buttons (verspielteres Gefuehl)
+   ======================================================================== */
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".btn, .choice-btn");
+  if (!btn) return;
+  btn.classList.remove("pop");
+  void btn.offsetWidth; // Reflow erzwingen, damit die Animation bei schnellem Doppel-Tap neu startet
+  btn.classList.add("pop");
+});
 
 /* ========================================================================
    Start
