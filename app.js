@@ -196,10 +196,11 @@ function isAnyGermanWordMatch(raw, deList) {
 
 function checkAnswer(card, vocab, rawInput) {
   if (card.dir === "de-en") {
-    const norm = normalize(rawInput);
-    const target = normalize(vocab.en);
-    return { correct: isCloseMatch(norm, target), exact: norm === target };
+    // Englisch-Eingabe: bewusst keine Tippfehler-Toleranz, hier zaehlt die korrekte Schreibweise.
+    const exact = normalize(rawInput) === normalize(vocab.en);
+    return { correct: exact, exact };
   }
+  // Deutsch-Eingabe: kleine Tippfehler werden toleriert (siehe isAnyGermanWordMatch).
   return isAnyGermanWordMatch(rawInput, vocab.de);
 }
 
