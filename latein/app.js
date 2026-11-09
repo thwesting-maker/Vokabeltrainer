@@ -135,9 +135,46 @@ function normalize(s) {
   return (s || "").trim().toLowerCase().replace(/\s+/g, " ");
 }
 
+/** Levenshtein-Distanz (Anzahl Einfuege-/Loesch-/Ersetz-Schritte zwischen zwei Strings). */
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  if (m === 0) return n;
+  if (n === 0) return m;
+  const dp = new Array(n + 1);
+  for (let j = 0; j <= n; j++) dp[j] = j;
+  for (let i = 1; i <= m; i++) {
+    let prev = dp[0];
+    dp[0] = i;
+    for (let j = 1; j <= n; j++) {
+      const tmp = dp[j];
+      dp[j] = a[i - 1] === b[j - 1] ? prev : 1 + Math.min(prev, dp[j], dp[j - 1]);
+      prev = tmp;
+    }
+  }
+  return dp[n];
+}
+
+/** Wie viele Tippfehler bei einem Wort dieser Laenge noch toleriert werden. */
+function maxAllowedTypos(wordLength) {
+  if (wordLength <= 3) return 0;
+  if (wordLength <= 6) return 1;
+  return 2;
+}
+
+/** Erlaubt kleine Tippfehler (vertauschter/fehlender/falscher Buchstabe), erwartet bereits normalisierte Strings. */
+function isCloseMatch(normInput, normTarget) {
+  if (normInput === normTarget) return true;
+  if (!normInput) return false;
+  const allowed = maxAllowedTypos(normTarget.length);
+  if (allowed === 0) return false;
+  if (Math.abs(normInput.length - normTarget.length) > allowed) return false;
+  return levenshtein(normInput, normTarget) <= allowed;
+}
+
+/** Prueft, ob irgendein akzeptiertes deutsches Wort passt. Gibt zurueck, ob exakt oder nur mit Tippfehler-Toleranz. */
 function isAnyGermanWordMatch(raw, deList) {
   const norm = normalize(raw);
-  if (!norm) return false;
+  if (!norm) return { correct: false, exact: false };
   const tokens = new Set();
   deList.forEach((d) => {
     const dn = normalize(d);
@@ -146,7 +183,11 @@ function isAnyGermanWordMatch(raw, deList) {
       if (w) tokens.add(w);
     });
   });
-  return tokens.has(norm);
+  if (tokens.has(norm)) return { correct: true, exact: true };
+  for (const t of tokens) {
+    if (isCloseMatch(norm, t)) return { correct: true, exact: false };
+  }
+  return { correct: false, exact: false };
 }
 
 function getLessons() {
@@ -629,7 +670,7 @@ function renderCurrentCard() {
 }
 
 /** Wertet eine Antwort (eingetippt oder per Multiple Choice angeklickt) aus, aktualisiert Zaehler/Fortschritt. */
-async function processAnswer(correct) {
+async function processAnswer({ correct, exact }) {
   const card = session.queue.shift();
   const vocab = vocabById(card.vocabId);
 
@@ -642,7 +683,7 @@ async function processAnswer(correct) {
     session.done++;
 
     feedback.className = "feedback-box correct";
-    feedback.textContent = "Richtig! 🎉";
+    feedback.textContent = exact ? "Richtig! 🎉" : `Fast richtig! ✓ Achte auf die Schreibweise: ${vocab.de.join(" / ")}`;
   } else {
     session.queue.push(card);
 
@@ -680,7 +721,7 @@ async function handleChoiceClick(clickedBtn, isCorrectChoice) {
   if (buttons.some((b) => b.disabled)) return;
   buttons.forEach((b) => (b.disabled = true));
 
-  const { correct, vocab } = await processAnswer(isCorrectChoice);
+  const { correct, vocab } = await processAnswer({ correct: isCorrectChoice, exact: true });
 
   buttons.forEach((b) => {
     if (normalize(b.textContent) === normalize(vocab.de.join(" / "))) {
